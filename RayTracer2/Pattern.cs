@@ -7,6 +7,7 @@ namespace RayTracer2 {
         private Color a;
         private Color b;
         private Matrix transform = Matrix.GetIdentityMatrix();
+        private string patternType;
 
         public Color A {
             get { return a; }
@@ -21,6 +22,11 @@ namespace RayTracer2 {
         public Matrix Transform {
             get { return transform; }
             set { transform = value; }
+        }
+
+        public string PatternType {
+            get { return patternType; }
+            set { patternType = value; }
         }
 
         public abstract Color PatternAt(Tuple point);

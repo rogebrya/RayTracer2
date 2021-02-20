@@ -7,6 +7,7 @@ namespace RayTracer2 {
         public StripedPattern(Color a, Color b) {
             A = a;
             B = b;
+            PatternType = "Striped Pattern";
         }
 
         public override Color PatternAt(Tuple point) {

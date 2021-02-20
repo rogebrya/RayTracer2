@@ -9,6 +9,10 @@ namespace RayTracer2 {
             ShapeType = "Plane";
         }
 
+        public override string ToString() {
+            return ShapeType;
+        }
+
         public override List<Intersection> LocalIntersect(Ray localRay) {
             if (EqualityOfDouble(Math.Abs(localRay.Direction.Y), 0)) {
                 return null;

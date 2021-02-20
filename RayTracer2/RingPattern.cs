@@ -7,6 +7,7 @@ namespace RayTracer2 {
         public RingPattern(Color a, Color b) {
             A = a;
             B = b;
+            PatternType = "Ring Pattern";
         }
 
         public override Color PatternAt(Tuple point) {

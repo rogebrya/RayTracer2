@@ -7,6 +7,7 @@ namespace RayTracer2 {
         public GradientPattern(Color a, Color b) {
             A = a;
             B = b;
+            PatternType = "Gradient Pattern";
         }
 
         public override Color PatternAt(Tuple point) {

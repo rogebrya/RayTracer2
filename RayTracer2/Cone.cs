@@ -27,6 +27,10 @@ namespace RayTracer2 {
             set { isClosed = value; }
         }
 
+        public override string ToString() {
+            return ShapeType;
+        }
+
         public static Cone GlassCone() {
             Cone c = new Cone();
             c.Material.Transparency = 1.0;

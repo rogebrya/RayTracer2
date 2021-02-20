@@ -31,6 +31,8 @@ namespace RayTracer2 {
             set { shapeType = value; }
         }
 
+        public override abstract string ToString();
+
         public List<Intersection> Intersect(Ray r) {
             Ray localRay = r.Transform(transform.Inverse());
 
@@ -107,7 +109,7 @@ namespace RayTracer2 {
         public Tuple savedNormal;
 
         public TestShape() {
-            ShapeType = "TestShape";
+            ShapeType = "Test Shape";
         }
 
         public override List<Intersection> LocalIntersect(Ray localRay) {
@@ -118,6 +120,9 @@ namespace RayTracer2 {
         public override Tuple LocalNormalAt(Tuple localPoint, Intersection hit) {
             savedNormal = localPoint;
             return localPoint - Tuple.Point(0, 0, 0); ;
+        }
+        public override string ToString() {
+            return ShapeType;
         }
     }
 }

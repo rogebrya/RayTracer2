@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Controls;
 
 namespace RayTracer2 {
     public class Camera {
@@ -81,11 +82,11 @@ namespace RayTracer2 {
             return new Ray(origin, direction);
         }
 
-        public Canvas Render(World w) {
+        public Canvas Render(World w, TextBlock output) {
             Canvas image = new Canvas(hsize, vsize);
             for (int y = 0; y < vsize; y++) {
                 for (int x = 0; x < hsize; x++) {
-                    //Console.WriteLine("Pixels Rendered: " + (y * hsize + x + 1) + " / " + (hsize * vsize));
+                    //output.Text += "Pixels Rendered: " + (y * hsize + x + 1) + " / " + (hsize * vsize) + Environment.NewLine;
                     Ray ray = RayForPixel(x, y);
                     Color color = w.ColorAt(ray, 5);
                     image.WritePixel(x, y, color);

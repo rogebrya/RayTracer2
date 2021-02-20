@@ -65,6 +65,10 @@ namespace RayTracer2 {
             set { n3 = value; }
         }
 
+        public override string ToString() {
+            return ShapeType;
+        }
+
         public override List<Intersection> LocalIntersect(Ray localRay) {
             List<Intersection> list = new List<Intersection>();
             Tuple dirCrossE2 = Tuple.Cross(localRay.Direction, E2);

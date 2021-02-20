@@ -27,6 +27,10 @@ namespace RayTracer2 {
             set { isClosed = value; }
         }
 
+        public override string ToString() {
+            return ShapeType;
+        }
+
         public static Cylinder GlassCylinder() {
             Cylinder c = new Cylinder();
             c.Material.Transparency = 1.0;

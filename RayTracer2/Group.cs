@@ -15,6 +15,10 @@ namespace RayTracer2 {
             set { shapes = value; }
         }
 
+        public override string ToString() {
+            return ShapeType;
+        }
+
         public void AddShape(Shape s) {
             Shapes.Add(s);
             s.Parent = this;

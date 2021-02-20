@@ -51,6 +51,10 @@ namespace RayTracer2 {
             set { normal = value; }
         }
 
+        public override string ToString() {
+            return ShapeType;
+        }
+
         public override List<Intersection> LocalIntersect(Ray localRay) {
             List<Intersection> list = new List<Intersection>();
 

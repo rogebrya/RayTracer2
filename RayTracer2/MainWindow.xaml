@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RayTracer2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
     <Grid>
+        <ComboBox x:Name="cmbAA" HorizontalAlignment="Left" Margin="91,192,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+            <ComboBoxItem Content="None"/>
+        </ComboBox>
+        <Label x:Name="lblAA" Content="Anti-aliasing:" HorizontalAlignment="Left" Margin="91,166,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cmbMultiThreading" HorizontalAlignment="Left" Margin="91,264,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+            <ComboBoxItem Content="None"/>
+        </ComboBox>
+        <Label x:Name="lblMultiThreading" Content="Multi-threading:" HorizontalAlignment="Left" Margin="91,238,0,0" VerticalAlignment="Top" Width="120"/>
+        <ScrollViewer Margin="310,141,310,116" HorizontalScrollBarVisibility="Auto">
+            <TextBlock x:Name="tbkSceneLog" Text="Scene Log" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        </ScrollViewer>
+        <Button x:Name="btnAddShape" Content="Add Shape" HorizontalAlignment="Left" Margin="641,294,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnAddShape_Click"/>
+        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="641,353,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnExit_Click"/>
+        <StatusBar x:Name="sbProgress" Margin="10,417,0,0"/>
+        <Button x:Name="btnRender" Content="Render" HorizontalAlignment="Left" Margin="641,324,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnRender_Click"/>
 
     </Grid>
 </Window>

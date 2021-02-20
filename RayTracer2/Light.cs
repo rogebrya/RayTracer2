@@ -9,7 +9,7 @@ namespace RayTracer2 {
         public Light(Tuple position, Color intensity) {
             this.position = position;
             this.intensity = intensity;
-        }
+        } 
 
         public Tuple Position {
             get { return position; }
@@ -23,6 +23,17 @@ namespace RayTracer2 {
 
         public static Light PointLight(Tuple position, Color intensity) {
             return new Light(position, intensity);
+        }
+
+        public string ToString() {
+            string str = "";
+            str += "Light:" + Environment.NewLine;
+            str += "\tPosition: " + Environment.NewLine;
+            str += "\t\tX: " + position.X + " Y: " + position.Y + " Z: " + position.Z + Environment.NewLine;
+            str += "\tIntensity: " + Environment.NewLine;
+            str += "\t\tR: " + intensity.Red + " G: " + intensity.Green + " B: " + intensity.Blue + Environment.NewLine;
+            str += Environment.NewLine;
+            return str;
         }
 
         /// <summary>

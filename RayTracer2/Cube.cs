@@ -8,6 +8,10 @@ namespace RayTracer2 {
             ShapeType = "Cube";
         }
 
+        public override string ToString() {
+            return ShapeType;
+        }
+
         public static Cube GlassCube() {
             Cube c = new Cube();
             c.Material.Transparency = 1.0;

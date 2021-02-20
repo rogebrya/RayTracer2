@@ -32,6 +32,10 @@ namespace RayTracer2 {
             set { right = value; }
         }
 
+        public override string ToString() {
+            return ShapeType;
+        }
+
         public override List<Intersection> LocalIntersect(Ray localRay) {
             List<Intersection> xs = new List<Intersection>();
             List<Intersection> leftXS = Left.Intersect(localRay);

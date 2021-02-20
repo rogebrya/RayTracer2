@@ -7,6 +7,7 @@ namespace RayTracer2 {
         public Checker3DPattern(Color a, Color b) {
             A = a;
             B = b;
+            PatternType = "3D Checker Pattern";
         }
         /*  Original
         (((Math.Floor(point.X) + Math.Floor(point.Y) + Math.Floor(point.Z)) % 2) == 0)
