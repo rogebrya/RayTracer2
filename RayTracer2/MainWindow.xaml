@@ -5,23 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RayTracer2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
+        Title="MainWindow" Height="450" Width="800"  HorizontalAlignment="Center" VerticalAlignment="Center" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
     <Grid>
-        <ComboBox x:Name="cmbAA" HorizontalAlignment="Left" Margin="91,192,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+        <ComboBox x:Name="cmbAA" HorizontalAlignment="Left" Margin="613,152,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
             <ComboBoxItem Content="None"/>
         </ComboBox>
-        <Label x:Name="lblAA" Content="Anti-aliasing:" HorizontalAlignment="Left" Margin="91,166,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="cmbMultiThreading" HorizontalAlignment="Left" Margin="91,264,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+        <Label x:Name="lblAA" Content="Anti-aliasing:" HorizontalAlignment="Left" Margin="613,126,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cmbMultiThreading" HorizontalAlignment="Left" Margin="613,224,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
             <ComboBoxItem Content="None"/>
         </ComboBox>
-        <Label x:Name="lblMultiThreading" Content="Multi-threading:" HorizontalAlignment="Left" Margin="91,238,0,0" VerticalAlignment="Top" Width="120"/>
-        <ScrollViewer Margin="310,141,310,116" HorizontalScrollBarVisibility="Auto">
+        <Label x:Name="lblMultiThreading" Content="Multi-threading:" HorizontalAlignment="Left" Margin="613,198,0,0" VerticalAlignment="Top" Width="120"/>
+        <ScrollViewer x:Name="scvLog" Margin="261,62,263,57" HorizontalScrollBarVisibility="Auto">
             <TextBlock x:Name="tbkSceneLog" Text="Scene Log" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
         </ScrollViewer>
-        <Button x:Name="btnAddShape" Content="Add Shape" HorizontalAlignment="Left" Margin="641,294,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnAddShape_Click"/>
-        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="641,353,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnExit_Click"/>
+        <Button x:Name="btnAddShape" Content="Add Shape" HorizontalAlignment="Left" Margin="70,318,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnAddShape_Click"/>
+        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="420,388,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnExit_Click"/>
         <StatusBar x:Name="sbProgress" Margin="10,417,0,0"/>
-        <Button x:Name="btnRender" Content="Render" HorizontalAlignment="Left" Margin="641,324,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnRender_Click"/>
+        <Button x:Name="btnRender" Content="Render" HorizontalAlignment="Left" Margin="633,285,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnRender_Click"/>
+        <ComboBox x:Name="cmbShape" HorizontalAlignment="Left" Margin="70,291,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="Sphere"/>
+            <ComboBoxItem Content="Cube"/>
+            <ComboBoxItem Content="Plane"/>
+            <ComboBoxItem Content="Cylinder"/>
+            <ComboBoxItem Content="Cone"/>
+        </ComboBox>
+        <Label x:Name="lblShape" Content="Shape:" HorizontalAlignment="Left" Margin="70,265,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnAddLight" Content="Add Light" HorizontalAlignment="Left" Margin="70,215,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnAddLight_Click"/>
+        <Label x:Name="lblLight" Content="Light:" HorizontalAlignment="Left" Margin="70,162,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnAddCamera" Content="Add Camera" HorizontalAlignment="Left" Margin="70,115,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnAddCamera_Click"/>
+        <Button x:Name="btnNew" Content="New World" HorizontalAlignment="Left" Margin="305,388,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnNew_Click"/>
 
     </Grid>
 </Window>

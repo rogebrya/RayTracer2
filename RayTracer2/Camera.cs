@@ -13,6 +13,10 @@ namespace RayTracer2 {
         private double halfHeight;
         private double pixelSize;
 
+        public Camera() {
+
+        }
+
         public Camera(int hsize, int vsize, double fieldOfView) {
             this.hsize = hsize;
             this.vsize = vsize;
@@ -53,6 +57,20 @@ namespace RayTracer2 {
         public double PixelSize {
             get { return pixelSize; }
             set { pixelSize = value; }
+        }
+
+        public override string ToString() {
+            string str = "";
+            str += "Camera:" + Environment.NewLine;
+            str += "  Horizontal Size: " + hsize + Environment.NewLine;
+            str += "  Vertical Size: " + vsize + Environment.NewLine;
+            str += "  Field of View (Degrees): " + RadiansToDegrees(fieldOfView) + Environment.NewLine;
+            str += Environment.NewLine;
+            return str;
+        }
+
+        private double RadiansToDegrees(double radians) {
+            return Math.Round(radians * 180 / Math.PI);
         }
 
         private void CalculatePixelSize() {

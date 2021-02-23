@@ -13,43 +13,54 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Diagnostics;
 
 namespace RayTracer2 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        World world;
-        Camera camera;
+        private World world;
+        private Camera camera;
+
         public MainWindow() {
             InitializeComponent();
             tbkSceneLog.Text = "";
             world = new World();
-            world.Light = Light.PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
-            tbkSceneLog.Text += world.Light.ToString();
+            world.AddLight(Light.PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1)));
+            foreach(Light lt in world.Lights) {
+                UpdateLog(lt.ToString());
+            }
             camera = new Camera(400, 200, Math.PI / 3);
             camera.Transform = Transformation.ViewTransform(
                     Tuple.Point(-2, 4, -7),
                     Tuple.Point(0, 1, 0),
                     Tuple.Vector(0, 1, 0)
                     );
-            tbkSceneLog.Text += camera.ToString();
+            UpdateLog(camera.ToString());
+        }
+
+        public World World {
+            get { return world; }
+            set { world = value; }
+        }
+
+        public Camera Camera {
+            get { return camera; }
+            set { camera = value; }
         }
 
         private void btnAddShape_Click(object sender, RoutedEventArgs e) {
-            Sphere s = new Sphere();
-            bool keep = true;
-            MakeSphere mksphr = new MakeSphere(s, keep);
+            MakeSphere mksphr = new MakeSphere();
             mksphr.ShowDialog();
-            if (keep) {
-                world.AddShape(s);
-                tbkSceneLog.Text += s.ToString();
-            }
         }
 
         private void btnRender_Click(object sender, RoutedEventArgs e) {
+            Stopwatch time = new Stopwatch();
+            time.Start();
             Canvas canvas = camera.Render(world, tbkSceneLog);
-            tbkSceneLog.Text += "Render Complete";
+            time.Stop();
+            UpdateLog("Render Complete" + Environment.NewLine + "Time Elapsed: " + time.Elapsed.Seconds);
 
             StreamWriter sw = new StreamWriter(@"C:\Users\prome\Desktop\GuiTest.ppm", false, Encoding.ASCII, 131072);
             sw.Write(canvas.CanvasToPPM());
@@ -58,7 +69,26 @@ namespace RayTracer2 {
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e) {
-            App.Current.Shutdown();
+            Application.Current.Shutdown();
+        }
+
+        public void UpdateLog(string s) {
+            tbkSceneLog.Text += s;
+            scvLog.ScrollToBottom();
+        }
+
+        private void btnAddCamera_Click(object sender, RoutedEventArgs e) {
+            MakeCamera mkcam = new MakeCamera();
+            mkcam.ShowDialog();
+        }
+
+        private void btnAddLight_Click(object sender, RoutedEventArgs e) {
+            MakeLight mklight = new MakeLight();
+            mklight.ShowDialog();
+        }
+
+        private void btnNew_Click(object sender, RoutedEventArgs e) {
+
         }
     }
 }

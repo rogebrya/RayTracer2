@@ -6,10 +6,27 @@ namespace RayTracer2 {
     public class Light {
         private Tuple position;
         private Color intensity;
-        public Light(Tuple position, Color intensity) {
+        private Tuple target;
+        private double fieldOfView;
+        private string lightType;
+
+        public Light() {
+
+        }
+
+        public Light(Tuple position, Color intensity, string lightType) {
             this.position = position;
             this.intensity = intensity;
-        } 
+            this.lightType = lightType;
+        }
+
+        public Light(Tuple position, Color intensity, Tuple target, double fieldOfView, string lightType) {
+            this.position = position;
+            this.intensity = intensity;
+            this.target = target;
+            this.fieldOfView = fieldOfView;
+            this.lightType = lightType;
+        }
 
         public Tuple Position {
             get { return position; }
@@ -21,29 +38,47 @@ namespace RayTracer2 {
             set { intensity = value; }
         }
 
+        public Tuple Target {
+            get { return target; }
+            set { target = value; }
+        }
+
+        public double FieldOfView {
+            get { return fieldOfView; }
+            set { fieldOfView = value; }
+        }
+
+        public string LightType {
+            get { return lightType; }
+            set { lightType = value; }
+        }
+
         public static Light PointLight(Tuple position, Color intensity) {
-            return new Light(position, intensity);
+            return new Light(position, intensity, "Point Light");
+        }
+
+        public static Light SpotLight(Tuple position, Color intensity, Tuple target, double fieldOfView) {
+            return new Light(position, intensity, target, DegreesToRadians(fieldOfView), "Spotlight");
+        }
+
+        private static double DegreesToRadians(double degrees) {
+            return Math.Round(degrees * Math.PI / 180);
         }
 
         public string ToString() {
             string str = "";
-            str += "Light:" + Environment.NewLine;
-            str += "\tPosition: " + Environment.NewLine;
-            str += "\t\tX: " + position.X + " Y: " + position.Y + " Z: " + position.Z + Environment.NewLine;
-            str += "\tIntensity: " + Environment.NewLine;
-            str += "\t\tR: " + intensity.Red + " G: " + intensity.Green + " B: " + intensity.Blue + Environment.NewLine;
+            str += "Light: " + LightType + Environment.NewLine;
+            str += "  Position: " + Environment.NewLine;
+            str += "    X: " + position.X + " Y: " + position.Y + " Z: " + position.Z + Environment.NewLine;
+            str += "  Intensity: " + Environment.NewLine;
+            str += "    R: " + intensity.Red + " G: " + intensity.Green + " B: " + intensity.Blue + Environment.NewLine;
+            if (lightType == "Spotlight") {
+                str += "  Target: " + Environment.NewLine;
+                str += "    X: " + target.X + " Y: " + target.Y + " Z: " + target.Z + Environment.NewLine;
+                str += "  Field of View: " + fieldOfView + Environment.NewLine;
+            }
             str += Environment.NewLine;
             return str;
-        }
-
-        /// <summary>
-        /// ///////////////////////////////////////
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="intensity"></param>
-        /// <returns></returns>
-        public static Light SpotLight(Tuple position, Color intensity) {
-            return new Light(position, intensity);
         }
 
         // Equality Stuff

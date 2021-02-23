@@ -5,15 +5,15 @@ using System.Text;
 namespace RayTracer2 {
     public class World {
         List<Shape> shapes;
-        Light light;
+        List<Light> lights;
 
         public World() {
 
         }
 
-        public World(List<Shape> shapes, Light light) {
+        public World(List<Shape> shapes, List<Light> lights) {
             this.shapes = shapes;
-            this.light = light;
+            this.lights = lights;
         }
 
         public static World DefaultWorld() {
@@ -26,8 +26,10 @@ namespace RayTracer2 {
             s2.Transform = Transformation.Scale(0.5, 0.5, 0.5);
             sList.Add(s1);
             sList.Add(s2);
+            List<Light> lList = new List<Light>();
             Light l = Light.PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
-            return new World(sList, l);
+            lList.Add(l);
+            return new World(sList, lList);
         }
 
         public List<Shape> Shapes {
@@ -35,9 +37,9 @@ namespace RayTracer2 {
             set { shapes = value; }
         }
 
-        public Light Light {
-            get { return light; }
-            set { light = value; }
+        public List<Light> Lights {
+            get { return lights; }
+            set { lights = value; }
         }
 
         public void AddShape(Shape s) {
@@ -45,6 +47,13 @@ namespace RayTracer2 {
                 shapes = new List<Shape>();
             }
             shapes.Add(s);
+        }
+
+        public void AddLight(Light lt) {
+            if (lights == null) {
+                lights = new List<Light>();
+            }
+            lights.Add(lt);
         }
 
         public List<Intersection> IntersectWorld(Ray r) {
@@ -61,8 +70,12 @@ namespace RayTracer2 {
 
         // Possibly change lighting call point -> overpoint to fix checkboard pattern
         public Color ShadeHit(Computations comps, int remaining) {
-            bool shadowed = IsShadowed(comps.overPoint);
-            Color surfaceColor = comps.shape.Material.Lighting(comps.shape, light, comps.overPoint, comps.eyev, comps.normalv, shadowed);
+            bool shadowed = IsShadowedFromAllLights(comps.overPoint);
+            Color surfaceColor = new Color(0, 0, 0);
+            foreach (Light lt in Lights) {
+                surfaceColor += comps.shape.Material.Lighting(comps.shape, lt, comps.overPoint, comps.eyev, comps.normalv, shadowed);
+            }
+            
             Color reflectedColor = ReflectedColor(comps, remaining);
             Color refractedColor = RefractedColor(comps, remaining);
 
@@ -85,8 +98,8 @@ namespace RayTracer2 {
             }
         }
 
-        public bool IsShadowed(Tuple point) {
-            Tuple v = light.Position - point;
+        public bool IsShadowed(Tuple point, Tuple light) {
+            Tuple v = light - point;
             double distance = Tuple.Magnitude(v);
             Tuple direction = Tuple.Normalize(v);
 
@@ -99,6 +112,14 @@ namespace RayTracer2 {
             } else {
                 return false;
             }
+        }
+
+        public bool IsShadowedFromAllLights(Tuple point) {
+            bool isShadowed = false;
+            foreach (Light lt in Lights) {
+                isShadowed = isShadowed || IsShadowed(point, lt.Position);
+            }
+            return isShadowed;
         }
 
         public Color ReflectedColor(Computations comps, int remaining) {

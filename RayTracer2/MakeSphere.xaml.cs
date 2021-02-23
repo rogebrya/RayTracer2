@@ -15,12 +15,11 @@ namespace RayTracer2 {
     /// Interaction logic for MakeSphere.xaml
     /// </summary>
     public partial class MakeSphere : Window {
-        Sphere sphere;
-        bool keep = true;
-        public MakeSphere(Sphere s, bool b) {
+        private Sphere sphere;
+
+        public MakeSphere() {
             InitializeComponent();
-            sphere = s;
-            keep = b;
+            sphere = new Sphere();
             txt00.Text = sphere.Transform.GetMatrix[0, 0].ToString();
             txt01.Text = sphere.Transform.GetMatrix[0, 1].ToString();
             txt02.Text = sphere.Transform.GetMatrix[0, 2].ToString();
@@ -69,11 +68,9 @@ namespace RayTracer2 {
             txt31P.Text = identityMatrix.GetMatrix[3, 1].ToString();
             txt32P.Text = identityMatrix.GetMatrix[3, 2].ToString();
             txt33P.Text = identityMatrix.GetMatrix[3, 3].ToString();
-
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
-            keep = false;
             Close();
         }
 
@@ -172,6 +169,8 @@ namespace RayTracer2 {
                 sphere.Material.Pattern.Transform = new Matrix(m00P, m01P, m02P, m03P, m10P, m11P, m12P, m13P, m20P, m21P, m22P, m23P, m30P, m31P, m32P, m33P);
             }
 
+            ((MainWindow)Application.Current.MainWindow).World.AddShape(sphere);
+            ((MainWindow)Application.Current.MainWindow).UpdateLog(sphere.ToString());
             Close();
         }
     }

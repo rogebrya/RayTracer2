@@ -11,35 +11,35 @@ namespace RayTracer2 {
         public override string ToString() {
             string str = "";
             str += "Shape: " + ShapeType + Environment.NewLine;
-            str += "\tTransform: " + Environment.NewLine;
-            str += "\t\t" + Transform.GetMatrix[0, 0] + Transform.GetMatrix[0, 1] + Transform.GetMatrix[0, 2] + Transform.GetMatrix[0, 3] + Environment.NewLine;
-            str += "\t\t" + Transform.GetMatrix[1, 0] + Transform.GetMatrix[1, 1] + Transform.GetMatrix[1, 2] + Transform.GetMatrix[1, 3] + Environment.NewLine;
-            str += "\t\t" + Transform.GetMatrix[2, 0] + Transform.GetMatrix[2, 1] + Transform.GetMatrix[2, 2] + Transform.GetMatrix[2, 3] + Environment.NewLine;
-            str += "\t\t" + Transform.GetMatrix[3, 0] + Transform.GetMatrix[3, 1] + Transform.GetMatrix[3, 2] + Transform.GetMatrix[3, 3] + Environment.NewLine;
-            str += "\tMaterial: " + Environment.NewLine;
-            str += "\t\tColor: " + Environment.NewLine;
-            str += "\t\t\tR: " + Material.Color.Red + " G: " + Material.Color.Green + " B: " + Material.Color.Blue + Environment.NewLine;
-            str += "\t\tAmbient: " + Material.Ambient + Environment.NewLine;
-            str += "\t\tDiffuse: " + Material.Diffuse + Environment.NewLine;
-            str += "\t\tSpecular: " + Material.Specular + Environment.NewLine;
-            str += "\t\tShininess: " + Material.Shininess + Environment.NewLine;
+            str += "  Transform: " + Environment.NewLine;
+            str += "    " + Transform.GetMatrix[0, 0] + Transform.GetMatrix[0, 1] + Transform.GetMatrix[0, 2] + Transform.GetMatrix[0, 3] + Environment.NewLine;
+            str += "    " + Transform.GetMatrix[1, 0] + Transform.GetMatrix[1, 1] + Transform.GetMatrix[1, 2] + Transform.GetMatrix[1, 3] + Environment.NewLine;
+            str += "    " + Transform.GetMatrix[2, 0] + Transform.GetMatrix[2, 1] + Transform.GetMatrix[2, 2] + Transform.GetMatrix[2, 3] + Environment.NewLine;
+            str += "    " + Transform.GetMatrix[3, 0] + Transform.GetMatrix[3, 1] + Transform.GetMatrix[3, 2] + Transform.GetMatrix[3, 3] + Environment.NewLine;
+            str += "  Material: " + Environment.NewLine;
+            str += "    Color: " + Environment.NewLine;
+            str += "      R: " + Material.Color.Red + " G: " + Material.Color.Green + " B: " + Material.Color.Blue + Environment.NewLine;
+            str += "    Ambient: " + Material.Ambient + Environment.NewLine;
+            str += "    Diffuse: " + Material.Diffuse + Environment.NewLine;
+            str += "    Specular: " + Material.Specular + Environment.NewLine;
+            str += "    Shininess: " + Material.Shininess + Environment.NewLine;
             if (Material.Pattern == null) {
-                str += "\t\tPattern: None" + Environment.NewLine;
+                str += "    Pattern: None" + Environment.NewLine;
             } else {
-                str += "\t\tPattern: " + Material.Pattern.PatternType + Environment.NewLine;
-                str += "\t\t\tColor 1: " + Environment.NewLine;
-                str += "\t\t\t\tR: " + Material.Pattern.A.Red + " G: " + Material.Pattern.A.Green + " B: " + Material.Pattern.A.Blue + Environment.NewLine;
-                str += "\t\t\tColor 2: " + Environment.NewLine;
-                str += "\t\t\t\tR: " + Material.Pattern.B.Red + " G: " + Material.Pattern.B.Green + " B: " + Material.Pattern.B.Blue + Environment.NewLine;
-                str += "\t\t\tTransform (Pattern): " + Environment.NewLine;
-                str += "\t\t\t\t" + Material.Pattern.Transform.GetMatrix[0, 0] + Material.Pattern.Transform.GetMatrix[0, 1] + Material.Pattern.Transform.GetMatrix[0, 2] + Material.Pattern.Transform.GetMatrix[0, 3] + Environment.NewLine;
-                str += "\t\t\t\t" + Material.Pattern.Transform.GetMatrix[1, 0] + Material.Pattern.Transform.GetMatrix[1, 1] + Material.Pattern.Transform.GetMatrix[1, 2] + Material.Pattern.Transform.GetMatrix[1, 3] + Environment.NewLine;
-                str += "\t\t\t\t" + Material.Pattern.Transform.GetMatrix[2, 0] + Material.Pattern.Transform.GetMatrix[2, 1] + Material.Pattern.Transform.GetMatrix[2, 2] + Material.Pattern.Transform.GetMatrix[2, 3] + Environment.NewLine;
-                str += "\t\t\t\t" + Material.Pattern.Transform.GetMatrix[3, 0] + Material.Pattern.Transform.GetMatrix[3, 1] + Material.Pattern.Transform.GetMatrix[3, 2] + Material.Pattern.Transform.GetMatrix[3, 3] + Environment.NewLine;
+                str += "    Pattern: " + Material.Pattern.PatternType + Environment.NewLine;
+                str += "      Color 1: " + Environment.NewLine;
+                str += "        R: " + Material.Pattern.A.Red + " G: " + Material.Pattern.A.Green + " B: " + Material.Pattern.A.Blue + Environment.NewLine;
+                str += "      Color 2: " + Environment.NewLine;
+                str += "        R: " + Material.Pattern.B.Red + " G: " + Material.Pattern.B.Green + " B: " + Material.Pattern.B.Blue + Environment.NewLine;
+                str += "      Transform (Pattern): " + Environment.NewLine;
+                str += "        " + Material.Pattern.Transform.GetMatrix[0, 0] + Material.Pattern.Transform.GetMatrix[0, 1] + Material.Pattern.Transform.GetMatrix[0, 2] + Material.Pattern.Transform.GetMatrix[0, 3] + Environment.NewLine;
+                str += "        " + Material.Pattern.Transform.GetMatrix[1, 0] + Material.Pattern.Transform.GetMatrix[1, 1] + Material.Pattern.Transform.GetMatrix[1, 2] + Material.Pattern.Transform.GetMatrix[1, 3] + Environment.NewLine;
+                str += "        " + Material.Pattern.Transform.GetMatrix[2, 0] + Material.Pattern.Transform.GetMatrix[2, 1] + Material.Pattern.Transform.GetMatrix[2, 2] + Material.Pattern.Transform.GetMatrix[2, 3] + Environment.NewLine;
+                str += "        " + Material.Pattern.Transform.GetMatrix[3, 0] + Material.Pattern.Transform.GetMatrix[3, 1] + Material.Pattern.Transform.GetMatrix[3, 2] + Material.Pattern.Transform.GetMatrix[3, 3] + Environment.NewLine;
             }
-            str += "\t\tReflectivity: " + Material.Reflectivity + Environment.NewLine;
-            str += "\t\tTransparency: " + Material.Transparency + Environment.NewLine;
-            str += "\t\tRefractive Index: " + Material.RefractiveIndex + Environment.NewLine;
+            str += "    Reflectivity: " + Material.Reflectivity + Environment.NewLine;
+            str += "    Transparency: " + Material.Transparency + Environment.NewLine;
+            str += "    Refractive Index: " + Material.RefractiveIndex + Environment.NewLine;
             str += Environment.NewLine;
             return str;
         }
