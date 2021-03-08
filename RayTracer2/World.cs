@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RayTracer2 {
     public class World {
-        List<Shape> shapes;
-        List<Light> lights;
+        private List<Shape> shapes;
+        private List<Light> lights;
+        private Camera camera;
 
         public World() {
 
@@ -16,6 +16,12 @@ namespace RayTracer2 {
             this.lights = lights;
         }
 
+        public World(List<Shape> shapes, List<Light> lights, Camera camera) {
+            this.shapes = shapes;
+            this.lights = lights;
+            this.camera = camera;
+        }
+
         public static World DefaultWorld() {
             List<Shape> sList = new List<Shape>();
             Sphere s1 = new Sphere();
@@ -23,7 +29,7 @@ namespace RayTracer2 {
             s1.Material.Diffuse = 0.7;
             s1.Material.Specular = 0.2;
             Sphere s2 = new Sphere();
-            s2.Transform = Transformation.Scale(0.5, 0.5, 0.5);
+            s2.Transform = new Scale(0.5, 0.5, 0.5).GetTransform();
             sList.Add(s1);
             sList.Add(s2);
             List<Light> lList = new List<Light>();
@@ -40,6 +46,11 @@ namespace RayTracer2 {
         public List<Light> Lights {
             get { return lights; }
             set { lights = value; }
+        }
+
+        public Camera Camera {
+            get { return camera; }
+            set { camera = value; }
         }
 
         public void AddShape(Shape s) {
@@ -67,6 +78,40 @@ namespace RayTracer2 {
             list.Sort(delegate (Intersection x, Intersection y) { return x.T.CompareTo(y.T); });
             return list;
         }
+
+        public override string ToString() {
+            string str = "";
+            if (Camera == null) {
+                str += "Camera: None" + Environment.NewLine;
+            } else {
+                str += camera.ToString();
+            }
+            str += Environment.NewLine;
+
+            if (Lights == null) {
+                str += "Lights: None";
+            } else {
+                str += "Lights:" + Environment.NewLine;
+                foreach (Light lt in Lights) {
+                    str += Globals.IndentString(lt.ToString());
+                    str += Environment.NewLine;
+                }
+            }
+
+            if (Shapes == null) {
+                str += "Shapes: None";
+            } else {
+                str += "Shapes:" + Environment.NewLine;
+                foreach (Shape s in Shapes) {
+                    str += Globals.IndentString(s.ToString());
+                    str += Environment.NewLine;
+                }
+            }
+            
+            return str;
+        }
+
+        
 
         // Possibly change lighting call point -> overpoint to fix checkboard pattern
         public Color ShadeHit(Computations comps, int remaining) {

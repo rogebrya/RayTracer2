@@ -4,8 +4,6 @@ using System.Text;
 
 namespace RayTracer2 {
     public class Tuple : IEquatable<Tuple> {
-        private const double EPSILON = 0.0001;
-
         protected double x;
         protected double y;
         protected double z;
@@ -51,7 +49,7 @@ namespace RayTracer2 {
         }
 
         public bool IsVector() {
-            if (EqualityOfDouble(w, 0.0)) {
+            if (Globals.EqualityOfDouble(w, 0.0)) {
                 return true;
             } else {
                 return false;
@@ -59,7 +57,7 @@ namespace RayTracer2 {
         }
 
         public bool IsPoint() {
-            if (EqualityOfDouble(w, 1.0)) {
+            if (Globals.EqualityOfDouble(w, 1.0)) {
                 return true;
             } else {
                 return false;
@@ -110,16 +108,12 @@ namespace RayTracer2 {
         }
 
         // Equality Stuff
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
-        }
-
         public static bool operator ==(Tuple t1, Tuple t2) {
-            return EqualityOfDouble(t1.x, t2.x) && EqualityOfDouble(t1.y, t2.y) && EqualityOfDouble(t1.z, t2.z) && EqualityOfDouble(t1.w, t2.w);
+            return Globals.EqualityOfDouble(t1.x, t2.x) && Globals.EqualityOfDouble(t1.y, t2.y) && Globals.EqualityOfDouble(t1.z, t2.z) && Globals.EqualityOfDouble(t1.w, t2.w);
         }
 
         public static bool operator !=(Tuple t1, Tuple t2) {
-            return !EqualityOfDouble(t1.x, t2.x) || !EqualityOfDouble(t1.y, t2.y) || !EqualityOfDouble(t1.z, t2.z) || !EqualityOfDouble(t1.w, t2.w);
+            return !Globals.EqualityOfDouble(t1.x, t2.x) || !Globals.EqualityOfDouble(t1.y, t2.y) || !Globals.EqualityOfDouble(t1.z, t2.z) || !Globals.EqualityOfDouble(t1.w, t2.w);
         }
 
         public override bool Equals(object obj) {
@@ -138,7 +132,7 @@ namespace RayTracer2 {
         public bool Equals(Tuple other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return EqualityOfDouble(x, other.x) && EqualityOfDouble(y, other.y) && EqualityOfDouble(z, other.z) && EqualityOfDouble(w, other.w);
+            return Globals.EqualityOfDouble(x, other.x) && Globals.EqualityOfDouble(y, other.y) && Globals.EqualityOfDouble(z, other.z) && Globals.EqualityOfDouble(w, other.w);
         }
     }
 }

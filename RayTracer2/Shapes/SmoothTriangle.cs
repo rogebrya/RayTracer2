@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace RayTracer2 {
-    public class Triangle : Shape {
+    public class SmoothTriangle : Shape {
         private Tuple p1;
         private Tuple p2;
         private Tuple p3;
         private Tuple e1;
         private Tuple e2;
-        private Tuple normal;
+        private Tuple n1;
+        private Tuple n2;
+        private Tuple n3;
 
-        public Triangle(Tuple point1, Tuple point2, Tuple point3) {
+        public SmoothTriangle(Tuple point1, Tuple point2, Tuple point3, Tuple normal1, Tuple normal2, Tuple normal3) {
             p1 = point1;
             p2 = point2;
             p3 = point3;
+            n1 = normal1;
+            n2 = normal2;
+            n3 = normal3;
             e1 = p2 - p1;
             e2 = p3 - p1;
-            normal = Tuple.Normalize(Tuple.Cross(e2, e1));
-            ShapeType = "Triangle";
+            ShapeType = "SmoothTriangle";
         }
 
         public Tuple P1 {
@@ -46,9 +50,19 @@ namespace RayTracer2 {
             set { e2 = value; }
         }
 
-        public Tuple Normal {
-            get { return normal; }
-            set { normal = value; }
+        public Tuple N1 {
+            get { return n1; }
+            set { n1 = value; }
+        }
+
+        public Tuple N2 {
+            get { return n2; }
+            set { n2 = value; }
+        }
+
+        public Tuple N3 {
+            get { return n3; }
+            set { n3 = value; }
         }
 
         public override string ToString() {
@@ -57,10 +71,9 @@ namespace RayTracer2 {
 
         public override List<Intersection> LocalIntersect(Ray localRay) {
             List<Intersection> list = new List<Intersection>();
-
             Tuple dirCrossE2 = Tuple.Cross(localRay.Direction, E2);
             double det = Tuple.Dot(E1, dirCrossE2);
-            if (Math.Abs(det) < EPSILON) {
+            if (Math.Abs(det) < Globals.EPSILON) {
                 return list;
             }
             double f = 1.0 / det;
@@ -75,12 +88,15 @@ namespace RayTracer2 {
                 return list;
             }
             double t = f * Tuple.Dot(E2, originCrossE1);
-            list.Add(new Intersection(t, this));
+            list.Add(new Intersection(t, this, u, v));
             return list;
         }
 
         public override Tuple LocalNormalAt(Tuple localPoint, Intersection hit) {
-            return Normal;
+            return
+                N2 * hit.U +
+                N3 * hit.V +
+                N1 * (1 - hit.U - hit.V);
         }
     }
 }

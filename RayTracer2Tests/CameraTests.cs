@@ -22,13 +22,13 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void PixelSizeHorizontal() {
             Camera c = new Camera(200, 125, Math.PI / 2);
-            Assert.IsTrue(Tuple.EqualityOfDouble(c.PixelSize, 0.01));
+            Assert.IsTrue(Globals.EqualityOfDouble(c.PixelSize, 0.01));
         }
 
         [TestMethod()]
         public void PixelSizeVertical() {
             Camera c = new Camera(125, 200, Math.PI / 2);
-            Assert.IsTrue(Tuple.EqualityOfDouble(c.PixelSize, 0.01));
+            Assert.IsTrue(Globals.EqualityOfDouble(c.PixelSize, 0.01));
         }
 
         [TestMethod()]
@@ -50,7 +50,7 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void RayWithTransformedCamera() {
             Camera c = new Camera(201, 101, Math.PI / 2);
-            c.Transform = Transformation.Rotate_Y(Math.PI / 4) * Transformation.Translate(0, -2, 5);
+            c.Transform = new RotateY(Math.PI / 4).GetTransform() * new Translate(0, -2, 5).GetTransform();
             Ray r = c.RayForPixel(100, 50);
             Assert.AreEqual(r.Origin, Tuple.Point(0, 2, -5));
             Assert.AreEqual(r.Direction, Tuple.Vector(Math.Sqrt(2) / 2, 0, -Math.Sqrt(2) / 2));
@@ -63,7 +63,7 @@ namespace RayTracer2.Tests {
             Tuple from = Tuple.Point(0, 0, -5);
             Tuple to = Tuple.Point(0, 0, 0);
             Tuple up = Tuple.Vector(0, 1, 0);
-            c.Transform = Transformation.ViewTransform(from, to, up);
+            c.Transform = new ViewTransform(from, to, up).GetTransform();
             Canvas image = c.Render(w);
             Assert.AreEqual(image.PixelAt(5, 5), new Color(0.38066, 0.47583, 0.2855));
         }

@@ -4,10 +4,9 @@ using System.Text;
 
 namespace RayTracer2 {
     public class Matrix : IEquatable<Matrix> {
-        private const double EPSILON = 0.00001;
-
         private double[,] matrix;
-        int size;
+        private int size;
+        private List<ITransformation> transformations;
 
         public Matrix() { }
 
@@ -58,6 +57,35 @@ namespace RayTracer2 {
         public double[,] GetMatrix {
             get { return matrix; }
             //set { matrix = value; }
+        }
+
+        public List<ITransformation> Transformations {
+            get { return transformations; }
+            set { transformations = value; }
+        }
+
+        public void RebuildMatrix() {
+            matrix = new double[4, 4];
+            size = 4;
+            matrix[0, 0] = 1;
+            matrix[0, 1] = 0;
+            matrix[0, 2] = 0;
+            matrix[0, 3] = 0;
+            matrix[1, 0] = 0;
+            matrix[1, 1] = 1;
+            matrix[1, 2] = 0;
+            matrix[1, 3] = 0;
+            matrix[2, 0] = 0;
+            matrix[2, 1] = 0;
+            matrix[2, 2] = 1;
+            matrix[2, 3] = 0;
+            matrix[3, 0] = 0;
+            matrix[3, 1] = 0;
+            matrix[3, 2] = 0;
+            matrix[3, 3] = 1;
+            foreach(ITransformation t in transformations) {
+                
+            }
         }
 
         public static Matrix operator *(Matrix m1, Matrix m2) {
@@ -175,16 +203,12 @@ namespace RayTracer2 {
         }
 
         // Equality Stuff
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
-        }
-
         public static bool operator ==(Matrix m1, Matrix m2) {
             bool output = true;
             if (m1.size == m2.size) {
                 for (int i = 0; i < m1.size; i++) {
                     for (int j = 0; j < m1.size; j++) {
-                        if (!EqualityOfDouble(m1.matrix[i, j], m2.matrix[i, j])) {
+                        if (!Globals.EqualityOfDouble(m1.matrix[i, j], m2.matrix[i, j])) {
                             return false;
                         }
                     }
@@ -200,7 +224,7 @@ namespace RayTracer2 {
             if (m1.size == m2.size) {
                 for (int i = 0; i < m1.size; i++) {
                     for (int j = 0; j < m1.size; j++) {
-                        if (!EqualityOfDouble(m1.matrix[i, j], m2.matrix[i, j])) {
+                        if (!Globals.EqualityOfDouble(m1.matrix[i, j], m2.matrix[i, j])) {
                             return true;
                         }
                     }
@@ -231,7 +255,7 @@ namespace RayTracer2 {
             if (size == other.size) {
                 for (int i = 0; i < size; i++) {
                     for (int j = 0; j < size; j++) {
-                        if (!EqualityOfDouble(matrix[i, j], other.matrix[i, j])) {
+                        if (!Globals.EqualityOfDouble(matrix[i, j], other.matrix[i, j])) {
                             return false;
                         }
                     }

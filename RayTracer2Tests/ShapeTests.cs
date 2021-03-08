@@ -16,8 +16,8 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void ChangeTransform() {
             TestShape s = new TestShape();
-            s.Transform = Transformation.Translate(2, 3, 4);
-            Assert.AreEqual(s.Transform, Transformation.Translate(2, 3, 4));
+            s.Transform = new Translate(2, 3, 4).GetTransform();
+            Assert.AreEqual(s.Transform, new Translate(2, 3, 4).GetTransform());
         }
 
         [TestMethod()]
@@ -40,7 +40,7 @@ namespace RayTracer2.Tests {
         public void ScaledShapeIntersectRay() {
             Ray r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             TestShape s = new TestShape();
-            s.Transform = Transformation.Scale(2, 2, 2);
+            s.Transform = new Scale(2, 2, 2).GetTransform();
             List<Intersection> xs = s.Intersect(r);
             Assert.AreEqual(s.savedRay.Origin, Tuple.Point(0, 0, -2.5));
             Assert.AreEqual(s.savedRay.Direction, Tuple.Vector(0, 0, 0.5));
@@ -50,7 +50,7 @@ namespace RayTracer2.Tests {
         public void TranslatedShapeIntersectRay() {
             Ray r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             TestShape s = new TestShape();
-            s.Transform = Transformation.Translate(5, 0, 0);
+            s.Transform = new Translate(5, 0, 0).GetTransform();
             List<Intersection> xs = s.Intersect(r);
             Assert.AreEqual(s.savedRay.Origin, Tuple.Point(-5, 0, -5));
             Assert.AreEqual(s.savedRay.Direction, Tuple.Vector(0, 0, 1));
@@ -59,7 +59,7 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void NormalTranslated() {
             TestShape s = new TestShape();
-            s.Transform = Transformation.Translate(0, 1, 0);
+            s.Transform = new Translate(0, 1, 0).GetTransform();
             Tuple n = s.NormalAt(Tuple.Point(0, 1.70711, -0.70711), new Intersection(0, s));
             Assert.AreEqual(n, Tuple.Vector(0, 0.70711, -0.70711));
         }
@@ -67,7 +67,7 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void NormalTransformed() {
             TestShape s = new TestShape();
-            Matrix m = Transformation.Scale(1, 0.5, 1) * Transformation.Rotate_Z(Math.PI / 5);
+            Matrix m = new Scale(1, 0.5, 1).GetTransform() * new RotateZ(Math.PI / 5).GetTransform();
             s.Transform = m;
             Tuple n = s.NormalAt(Tuple.Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2), new Intersection(0, s));
             Assert.AreEqual(n, Tuple.Vector(0, 0.97014, -0.24254));
@@ -90,12 +90,12 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void ConvertPointFromWorldToObject() {
             Group g1 = new Group();
-            g1.Transform = Transformation.Rotate_Y(Math.PI / 2);
+            g1.Transform = new RotateY(Math.PI / 2).GetTransform();
             Group g2 = new Group();
-            g2.Transform = Transformation.Scale(2, 2, 2);
+            g2.Transform = new Scale(2, 2, 2).GetTransform();
             g1.AddShape(g2);
             Sphere s = new Sphere();
-            s.Transform = Transformation.Translate(5, 0, 0);
+            s.Transform = new Translate(5, 0, 0).GetTransform();
             g2.AddShape(s);
             Tuple p = s.WorldToObject(Tuple.Point(-2, 0, -10));
             Assert.AreEqual(p, Tuple.Point(0, 0, -1));
@@ -104,13 +104,16 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void ConvertNormalFromObjectToWorld() {
             Group g1 = new Group();
-            g1.Transform = Transformation.Rotate_Y(Math.PI / 2);
+            g1.TransformList.Add(new RotateY(Math.PI / 2));
+            g1.InitiateTransformation();
             Group g2 = new Group();
-            g2.Transform = Transformation.Scale(1, 2, 3);
+            g2.TransformList.Add(new Scale(1, 2, 3));
             g1.AddShape(g2);
+            g2.InitiateTransformation();
             Sphere s = new Sphere();
-            s.Transform = Transformation.Translate(5, 0, 0);
+            s.TransformList.Add(new Translate(5, 0, 0));
             g2.AddShape(s);
+            s.InitiateTransformation();
             Tuple n = s.NormalToWorld(Tuple.Vector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
             Assert.AreEqual(n, Tuple.Vector(0.2857, 0.4286, -0.8571));
         }
@@ -118,13 +121,16 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void ConvertNormalOnChild() {
             Group g1 = new Group();
-            g1.Transform = Transformation.Rotate_Y(Math.PI / 2);
+            g1.TransformList.Add(new RotateY(Math.PI / 2));
+            g1.InitiateTransformation();
             Group g2 = new Group();
-            g2.Transform = Transformation.Scale(1, 2, 3);
+            g2.TransformList.Add(new Scale(1, 2, 3));
             g1.AddShape(g2);
+            g2.InitiateTransformation();
             Sphere s = new Sphere();
-            s.Transform = Transformation.Translate(5, 0, 0);
+            s.TransformList.Add(new Translate(5, 0, 0));
             g2.AddShape(s);
+            s.InitiateTransformation();
             Tuple n = s.NormalAt(Tuple.Point(1.7321, 1.1547, -5.5774), new Intersection(0, s));
             Assert.AreEqual(n, Tuple.Vector(0.2857, 0.4286, -0.8571));
         }

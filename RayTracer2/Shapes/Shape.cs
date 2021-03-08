@@ -4,9 +4,8 @@ using System.Text;
 
 namespace RayTracer2 {
     public abstract class Shape {
-        protected const double EPSILON = 0.0001;
-
         private Matrix transform = Matrix.GetIdentityMatrix();
+        private List<ITransformation> transformList = new List<ITransformation>();
         private Material material = new Material();
         private Shape parent;
         private string shapeType;
@@ -14,6 +13,11 @@ namespace RayTracer2 {
         public Matrix Transform {
             get { return transform; }
             set { transform = value; }
+        }
+
+        public List<ITransformation> TransformList {
+            get { return transformList; }
+            set { transformList = value; }
         }
 
         public Material Material {
@@ -71,9 +75,21 @@ namespace RayTracer2 {
             return normal;
         }
 
+        public void InitiateTransformation() {
+            Transform = Matrix.GetIdentityMatrix();
+            if (TransformList.Count > 0) {
+                foreach (ITransformation t in TransformList) {
+                    Transform = Transform * t.GetTransform();
+                }
+            }
+            if (Material.Pattern != null) {
+                Material.Pattern.InitiateTransformation();
+            }
+        }
+
         // Equality Stuff
         public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
+            return Math.Abs(a - b) < Globals.EPSILON;
         }
 
         public static bool operator ==(Shape t1, Shape t2) {

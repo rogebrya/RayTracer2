@@ -48,7 +48,7 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void StripesWithObjectTransformation() {
             Sphere s = new Sphere();
-            s.Transform = Transformation.Scale(2, 2, 2);
+            s.Transform = new Scale(2, 2, 2).GetTransform();
             Pattern pattern = new StripedPattern(white, black);
             Color c = pattern.PatternAtShape(s, Tuple.Point(1.5, 0, 0));
             Assert.AreEqual(c, white);
@@ -58,7 +58,7 @@ namespace RayTracer2.Tests {
         public void StripesWithPatternTransformation() {
             Sphere s = new Sphere();
             Pattern pattern = new StripedPattern(white, black);
-            pattern.Transform = Transformation.Scale(2, 2, 2);
+            pattern.Transform = new Scale(2, 2, 2).GetTransform();
             Color c = pattern.PatternAtShape(s, Tuple.Point(1.5, 0, 0));
             Assert.AreEqual(c, white);
         }
@@ -66,9 +66,9 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void StripesWithObjectAndPatternTransformation() {
             Sphere s = new Sphere();
-            s.Transform = Transformation.Scale(2, 2, 2);
+            s.Transform = new Scale(2, 2, 2).GetTransform();
             Pattern pattern = new StripedPattern(white, black);
-            pattern.Transform = Transformation.Translate(0.5, 0, 0);
+            pattern.Transform = new Translate(0.5, 0, 0).GetTransform();
             Color c = pattern.PatternAtShape(s, Tuple.Point(2.5, 0, 0));
             Assert.AreEqual(c, white);
         }
@@ -84,14 +84,14 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void TestPatternAssignTransform() {
             TestPattern pattern = new TestPattern();
-            pattern.Transform = Transformation.Translate(1, 2, 3);
-            Assert.AreEqual(pattern.Transform, Transformation.Translate(1, 2, 3));
+            pattern.Transform = new Translate(1, 2, 3).GetTransform();
+            Assert.AreEqual(pattern.Transform, new Translate(1, 2, 3).GetTransform());
         }
 
         [TestMethod()]
         public void PatternAtShapeObjectTransform() {
             Sphere shape = new Sphere();
-            shape.Transform = Transformation.Scale(2, 2, 2);
+            shape.Transform = new Scale(2, 2, 2).GetTransform();
             TestPattern pattern = new TestPattern();
             Color c = pattern.PatternAtShape(shape, Tuple.Point(2, 3, 4));
             Assert.AreEqual(c, new Color(1, 1.5, 2));
@@ -101,7 +101,7 @@ namespace RayTracer2.Tests {
         public void PatternAtShapePAtternTransform() {
             Sphere shape = new Sphere();
             TestPattern pattern = new TestPattern();
-            pattern.Transform = Transformation.Scale(2, 2, 2);
+            pattern.Transform = new Scale(2, 2, 2).GetTransform();
             Color c = pattern.PatternAtShape(shape, Tuple.Point(2, 3, 4));
             Assert.AreEqual(c, new Color(1, 1.5, 2));
         }
@@ -109,9 +109,9 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void PatternAtShapeBothTransform() {
             Sphere shape = new Sphere();
-            shape.Transform = Transformation.Scale(2, 2, 2);
+            shape.Transform = new Scale(2, 2, 2).GetTransform();
             TestPattern pattern = new TestPattern();
-            pattern.Transform = Transformation.Translate(0.5, 1, 1.5);
+            pattern.Transform = new Translate(0.5, 1, 1.5).GetTransform();
             Color c = pattern.PatternAtShape(shape, Tuple.Point(2.5, 3, 3.5));
             Assert.AreEqual(c, new Color(0.75, 0.5, 0.25));
         }

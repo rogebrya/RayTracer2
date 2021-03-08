@@ -65,19 +65,18 @@ namespace RayTracer2 {
             return Math.Round(degrees * Math.PI / 180);
         }
 
-        public string ToString() {
+        public override string ToString() {
             string str = "";
-            str += "Light: " + LightType + Environment.NewLine;
-            str += "  Position: " + Environment.NewLine;
-            str += "    X: " + position.X + " Y: " + position.Y + " Z: " + position.Z + Environment.NewLine;
-            str += "  Intensity: " + Environment.NewLine;
-            str += "    R: " + intensity.Red + " G: " + intensity.Green + " B: " + intensity.Blue + Environment.NewLine;
+            str += "Light Type: " + LightType + Environment.NewLine;
+            str += Globals.prepend + "Position: " + Environment.NewLine;
+            str += Globals.prepend + Globals.prepend + "X: " + position.X + " Y: " + position.Y + " Z: " + position.Z + Environment.NewLine;
+            str += Globals.prepend + "Intensity: " + Environment.NewLine;
+            str += Globals.prepend + Globals.prepend + "R: " + intensity.Red + " G: " + intensity.Green + " B: " + intensity.Blue + Environment.NewLine;
             if (lightType == "Spotlight") {
-                str += "  Target: " + Environment.NewLine;
-                str += "    X: " + target.X + " Y: " + target.Y + " Z: " + target.Z + Environment.NewLine;
-                str += "  Field of View: " + fieldOfView + Environment.NewLine;
+                str += Globals.prepend + "Target: " + Environment.NewLine;
+                str += Globals.prepend + Globals.prepend + "X: " + target.X + " Y: " + target.Y + " Z: " + target.Z + Environment.NewLine;
+                str += Globals.prepend + "Field of View: " + fieldOfView + Environment.NewLine;
             }
-            str += Environment.NewLine;
             return str;
         }
 

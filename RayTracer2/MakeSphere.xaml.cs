@@ -170,7 +170,6 @@ namespace RayTracer2 {
             }
 
             ((MainWindow)Application.Current.MainWindow).World.AddShape(sphere);
-            ((MainWindow)Application.Current.MainWindow).UpdateLog(sphere.ToString());
             Close();
         }
     }

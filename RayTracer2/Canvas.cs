@@ -30,6 +30,7 @@ namespace RayTracer2 {
 
         public Color[,] Pixels {
             get { return pixels; }
+            set { pixels = value; }
         }
 
         public void WritePixel(int w, int h, Color color) {

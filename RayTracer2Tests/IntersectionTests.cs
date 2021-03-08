@@ -7,11 +7,6 @@ using System.Text;
 namespace RayTracer2.Tests {
     [TestClass()]
     public class IntersectionTests {
-        private const double EPSILON = 0.0001;
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
-        }
-
         [TestMethod()]
         public void IntersectionTest() {
             Sphere s = new Sphere();
@@ -113,10 +108,10 @@ namespace RayTracer2.Tests {
         public void HitOffsetsPoint() {
             Ray r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             Sphere shape = new Sphere();
-            shape.Transform = Transformation.Translate(0, 0, 1);
+            shape.Transform = new Translate(0, 0, 1).GetTransform();
             Intersection i = new Intersection(5, shape);
             Computations comps = Computations.PrepareComputations(i, r);
-            Assert.IsTrue(comps.overPoint.Z < -EPSILON / 2);
+            Assert.IsTrue(comps.overPoint.Z < -Globals.EPSILON / 2);
             Assert.IsTrue(comps.point.Z > comps.overPoint.Z);
         }
 
@@ -132,13 +127,13 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void FindN1AndN2AtSeveralIntersections() {
             Sphere a = Sphere.GlassSphere();
-            a.Transform = Transformation.Scale(2, 2, 2);
+            a.Transform = new Scale(2, 2, 2).GetTransform();
             a.Material.RefractiveIndex = 1.5;
             Sphere b = Sphere.GlassSphere();
-            b.Transform = Transformation.Translate(0, 0, -0.25);
+            b.Transform = new Translate(0, 0, -0.25).GetTransform();
             b.Material.RefractiveIndex = 2.0;
             Sphere c = Sphere.GlassSphere();
-            c.Transform = Transformation.Translate(0, 0, 0.25);
+            c.Transform = new Translate(0, 0, 0.25).GetTransform();
             c.Material.RefractiveIndex = 2.5;
             Ray r = new Ray(Tuple.Point(0, 0, -4), Tuple.Vector(0, 0, 1));
             List<Intersection> xs = new List<Intersection>(){
@@ -169,12 +164,12 @@ namespace RayTracer2.Tests {
         public void UnderPoint() {
             Ray r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             Sphere shape = Sphere.GlassSphere();
-            shape.Transform = Transformation.Translate(0, 0, 1);
+            shape.Transform = new Translate(0, 0, 1).GetTransform();
             Intersection i = new Intersection(5, shape);
             List<Intersection> xs = new List<Intersection>();
             xs.Add(i);
             Computations comps = Computations.PrepareComputations(i, r, xs);
-            Assert.IsTrue(comps.underPoint.Z > EPSILON / 2);
+            Assert.IsTrue(comps.underPoint.Z > Globals.EPSILON / 2);
             Assert.IsTrue(comps.point.Z < comps.underPoint.Z);
         }
 
@@ -187,7 +182,7 @@ namespace RayTracer2.Tests {
             xs.Add(new Intersection(Math.Sqrt(2) / 2, shape));
             Computations comps = Computations.PrepareComputations(xs[1], r, xs);
             double reflectance = Intersection.Schlick(comps);
-            Assert.IsTrue(EqualityOfDouble(reflectance, 1.0));
+            Assert.IsTrue(Globals.EqualityOfDouble(reflectance, 1.0));
         }
 
         [TestMethod()]
@@ -199,7 +194,7 @@ namespace RayTracer2.Tests {
             xs.Add(new Intersection(1, shape));
             Computations comps = Computations.PrepareComputations(xs[1], r, xs);
             double reflectance = Intersection.Schlick(comps);
-            Assert.IsTrue(EqualityOfDouble(reflectance, 0.04));
+            Assert.IsTrue(Globals.EqualityOfDouble(reflectance, 0.04));
         }
 
         [TestMethod()]
@@ -210,15 +205,15 @@ namespace RayTracer2.Tests {
             xs.Add(new Intersection(1.8589, shape));
             Computations comps = Computations.PrepareComputations(xs[0], r, xs);
             double reflectance = Intersection.Schlick(comps);
-            Assert.IsTrue(EqualityOfDouble(reflectance, 0.48873));
+            Assert.IsTrue(Globals.EqualityOfDouble(reflectance, 0.48873));
         }
 
         [TestMethod()]
         public void UVProperties() {
             Shape shape = new Triangle(Tuple.Point(0, 1, 0), Tuple.Point(-1, 0, 0), Tuple.Point(1, 0, 0));
             Intersection i = new Intersection(3.5, shape, 0.2, 0.4);
-            Assert.IsTrue(EqualityOfDouble(i.U, 0.2));
-            Assert.IsTrue(EqualityOfDouble(i.V, 0.4));
+            Assert.IsTrue(Globals.EqualityOfDouble(i.U, 0.2));
+            Assert.IsTrue(Globals.EqualityOfDouble(i.V, 0.4));
         }
     }
 }

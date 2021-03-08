@@ -59,7 +59,6 @@ namespace RayTracer2 {
             }
 
             ((MainWindow)Application.Current.MainWindow).World.AddLight(light);
-            ((MainWindow)Application.Current.MainWindow).UpdateLog(light.ToString());
             Close();
         }
 

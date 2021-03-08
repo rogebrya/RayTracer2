@@ -46,7 +46,7 @@ namespace RayTracer2 {
             double tminNumerator = (-1.0 - origin);
             double tmaxNumerator = (1.0 - origin);
 
-            if (Math.Abs(direction) >= EPSILON) {
+            if (Math.Abs(direction) >= Globals.EPSILON) {
                 tmin = tminNumerator / direction;
                 tmax = tmaxNumerator / direction;
             } else {
@@ -65,9 +65,9 @@ namespace RayTracer2 {
 
         public override Tuple LocalNormalAt(Tuple localPoint, Intersection hit) {
             double maxc = Math.Max(Math.Max(Math.Abs(localPoint.X), Math.Abs(localPoint.Y)), Math.Abs(localPoint.Z));
-            if (EqualityOfDouble(maxc, Math.Abs(localPoint.X))) {
+            if (Globals.EqualityOfDouble(maxc, Math.Abs(localPoint.X))) {
                 return Tuple.Vector(localPoint.X, 0, 0);
-            } else if (EqualityOfDouble(maxc, Math.Abs(localPoint.Y))) {
+            } else if (Globals.EqualityOfDouble(maxc, Math.Abs(localPoint.Y))) {
                 return Tuple.Vector(0, localPoint.Y, 0);
             } else {
                 return Tuple.Vector(0, 0, localPoint.Z);

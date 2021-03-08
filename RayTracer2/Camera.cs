@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows.Controls;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RayTracer2 {
     public class Camera {
@@ -9,6 +10,7 @@ namespace RayTracer2 {
         private int vsize;
         private double fieldOfView;
         private Matrix transform = Matrix.GetIdentityMatrix();
+        private List<Matrix> transformList = new List<Matrix>();
         private double halfWidth;
         private double halfHeight;
         private double pixelSize;
@@ -44,6 +46,11 @@ namespace RayTracer2 {
             set { transform = value; }
         }
 
+        public List<Matrix> TransformList {
+            get { return transformList; }
+            set { transformList = value; }
+        }
+
         public double HalfWidth {
             get { return halfWidth; }
             set { halfWidth = value; }
@@ -62,10 +69,9 @@ namespace RayTracer2 {
         public override string ToString() {
             string str = "";
             str += "Camera:" + Environment.NewLine;
-            str += "  Horizontal Size: " + hsize + Environment.NewLine;
-            str += "  Vertical Size: " + vsize + Environment.NewLine;
-            str += "  Field of View (Degrees): " + RadiansToDegrees(fieldOfView) + Environment.NewLine;
-            str += Environment.NewLine;
+            str += Globals.prepend + "Horizontal Size: " + hsize + Environment.NewLine;
+            str += Globals.prepend + "Vertical Size: " + vsize + Environment.NewLine;
+            str += Globals.prepend + "Field of View (Degrees): " + RadiansToDegrees(fieldOfView) + Environment.NewLine;
             return str;
         }
 
@@ -100,7 +106,23 @@ namespace RayTracer2 {
             return new Ray(origin, direction);
         }
 
-        public Canvas Render(World w, TextBlock output) {
+        public Canvas RenderWrapper(World w) {
+            foreach (Shape s in w.Shapes) {
+                s.InitiateTransformation();
+            }
+            InitiateTransformation();
+            return RenderMultithread(w);
+        }
+
+        public void InitiateTransformation() {
+            if (TransformList.Count > 0) {
+                foreach (ITransformation t in TransformList) {
+                    Transform = Transform * t.GetTransform();
+                }
+            }
+        }
+
+        public Canvas Render(World w) {
             Canvas image = new Canvas(hsize, vsize);
             for (int y = 0; y < vsize; y++) {
                 for (int x = 0; x < hsize; x++) {
@@ -113,13 +135,25 @@ namespace RayTracer2 {
             return image;
         }
 
-        /*
-        public Canvas RenderMultithread(World w, int numThreads = 0) {
+        public Canvas RenderMultithread(World w) {
+            Canvas image = new Canvas(hsize, vsize);
+            Parallel.For(0, vsize, delegate (int y) {
+                for (int x = 0; x < hsize; x++) {
+                    Ray ray = RayForPixel(x, y);
+                    Color color = w.ColorAt(ray, 5);
+                    image.WritePixel(x, y, color);
+                }
+            });
+            return image;
+        }
+        
+        
+        public Canvas RenderMultithread(World w, int numThreads) {
             if (numThreads == 0) {
                 return Render(w);
             } else if (vsize % numThreads != 0) {
-                Console.WriteLine("Invalid thread count specified; proceeding with single threaded algorithm.");
-                return Render(w);
+                //Console.WriteLine("Invalid thread count specified; proceeding with single threaded algorithm.");
+                return RenderMultithread(w);
             } else {
                 Canvas image = new Canvas(hsize, vsize);
                 List<Thread> threads = new List<Thread>();
@@ -136,8 +170,8 @@ namespace RayTracer2 {
                 return image;
             }
         }
-        */
 
+        
         public void ThreadJob(World w, Canvas image, int ymin, int ymax, int xmin, int xmax) {
             for (int y = ymin; y < ymax; y++) {
                 for (int x = xmin; x < xmax; x++) {

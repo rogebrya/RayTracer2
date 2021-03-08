@@ -7,11 +7,6 @@ using System.Text;
 namespace RayTracer2.Tests {
     [TestClass()]
     public class ConeTests {
-        private const double EPSILON = 0.0001;
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
-        }
-
         [TestMethod()]
         public void RayIntersectsCone() {
             Shape c = new Cone();
@@ -29,8 +24,8 @@ namespace RayTracer2.Tests {
                 Ray r = new Ray(tuples[i, 0], Tuple.Normalize(tuples[i, 1]));
                 List<Intersection> xs = c.LocalIntersect(r);
                 Assert.AreEqual(xs.Count, 2);
-                Assert.IsTrue(EqualityOfDouble(xs[0].T, tValues[i, 0]));
-                Assert.IsTrue(EqualityOfDouble(xs[1].T, tValues[i, 1]));
+                Assert.IsTrue(Globals.EqualityOfDouble(xs[0].T, tValues[i, 0]));
+                Assert.IsTrue(Globals.EqualityOfDouble(xs[1].T, tValues[i, 1]));
             }
         }
 
@@ -40,7 +35,7 @@ namespace RayTracer2.Tests {
             Ray r = new Ray(Tuple.Point(0, 0, -1), Tuple.Normalize(Tuple.Vector(0, 1, 1)));
             List<Intersection> xs = c.LocalIntersect(r);
             Assert.AreEqual(xs.Count, 1);
-            Assert.IsTrue(EqualityOfDouble(xs[0].T, 0.35355));
+            Assert.IsTrue(Globals.EqualityOfDouble(xs[0].T, 0.35355));
         }
 
         [TestMethod()]

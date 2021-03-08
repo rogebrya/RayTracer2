@@ -28,7 +28,7 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void TranslateRayTest() {
             Ray r = new Ray(Tuple.Point(1, 2, 3), Tuple.Vector(0, 1, 0));
-            Matrix m = Transformation.Translate(3, 4, 5);
+            Matrix m = new Translate(3, 4, 5).GetTransform();
             Ray r2 = r.Transform(m);
             Assert.AreEqual(r2.Origin, Tuple.Point(4, 6, 8));
             Assert.AreEqual(r2.Direction, Tuple.Vector(0, 1, 0));
@@ -37,7 +37,7 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void ScaleRayTest() {
             Ray r = new Ray(Tuple.Point(1, 2, 3), Tuple.Vector(0, 1, 0));
-            Matrix m = Transformation.Scale(2, 3, 4);
+            Matrix m = new Scale(2, 3, 4).GetTransform();
             Ray r2 = r.Transform(m);
             Assert.AreEqual(r2.Origin, Tuple.Point(2, 6, 12));
             Assert.AreEqual(r2.Direction, Tuple.Vector(0, 3, 0));

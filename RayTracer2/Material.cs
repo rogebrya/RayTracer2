@@ -4,8 +4,6 @@ using System.Text;
 
 namespace RayTracer2 {
     public class Material {
-        private const double EPSILON = 0.0001;
-
         private Color color = new Color(1, 1, 1);
         private double ambient = 0.1;
         private double diffuse = 0.9;
@@ -105,21 +103,37 @@ namespace RayTracer2 {
             }
         }
 
-        // Equality Stuff
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
+        public override string ToString() {
+            string str = "";
+            str += "Material: " + Environment.NewLine;
+            str += Globals.prepend + "Color: " + Environment.NewLine;
+            str += Globals.prepend + Globals.prepend + "R: " + Color.Red + " G: " + Color.Green + " B: " + Color.Blue + Environment.NewLine;
+            str += Globals.prepend + "Ambient: " + Ambient + Environment.NewLine;
+            str += Globals.prepend + "Diffuse: " + Diffuse + Environment.NewLine;
+            str += Globals.prepend + "Specular: " + Specular + Environment.NewLine;
+            str += Globals.prepend + "Shininess: " + Shininess + Environment.NewLine;
+            if (Pattern == null) {
+                str += Globals.prepend + Globals.prepend + "Pattern: None" + Environment.NewLine;
+            } else {
+                str += Globals.IndentString(Pattern.ToString()) + Environment.NewLine;
+            }
+            str += Globals.prepend + "Reflectivity: " + Reflectivity + Environment.NewLine;
+            str += Globals.prepend + "Transparency: " + Transparency + Environment.NewLine;
+            str += Globals.prepend + "Refractive Index: " + RefractiveIndex + Environment.NewLine;
+            return str;
         }
 
+        // Equality Stuff
         public static bool operator ==(Material m1, Material m2) {
-            return ((m1.Color == m2.Color) && EqualityOfDouble(m1.Ambient, m2.Ambient) &&
-                EqualityOfDouble(m1.Diffuse, m2.Diffuse) && EqualityOfDouble(m1.Specular, m2.Specular)
-                && EqualityOfDouble(m1.Shininess, m2.Shininess));
+            return ((m1.Color == m2.Color) && Globals.EqualityOfDouble(m1.Ambient, m2.Ambient) &&
+                Globals.EqualityOfDouble(m1.Diffuse, m2.Diffuse) && Globals.EqualityOfDouble(m1.Specular, m2.Specular)
+                && Globals.EqualityOfDouble(m1.Shininess, m2.Shininess));
         }
 
         public static bool operator !=(Material m1, Material m2) {
-            return !((m1.Color == m2.Color) && EqualityOfDouble(m1.Ambient, m2.Ambient) &&
-                EqualityOfDouble(m1.Diffuse, m2.Diffuse) && EqualityOfDouble(m1.Specular, m2.Specular)
-                && EqualityOfDouble(m1.Shininess, m2.Shininess));
+            return !((m1.Color == m2.Color) && Globals.EqualityOfDouble(m1.Ambient, m2.Ambient) &&
+                Globals.EqualityOfDouble(m1.Diffuse, m2.Diffuse) && Globals.EqualityOfDouble(m1.Specular, m2.Specular)
+                && Globals.EqualityOfDouble(m1.Shininess, m2.Shininess));
         }
 
         public override bool Equals(object obj) {
@@ -138,9 +152,9 @@ namespace RayTracer2 {
         public bool Equals(Material other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return ((Color == other.Color) && EqualityOfDouble(Ambient, other.Ambient) &&
-                EqualityOfDouble(Diffuse, other.Diffuse) && EqualityOfDouble(Specular, other.Specular)
-                && EqualityOfDouble(Shininess, other.Shininess));
+            return ((Color == other.Color) && Globals.EqualityOfDouble(Ambient, other.Ambient) &&
+                Globals.EqualityOfDouble(Diffuse, other.Diffuse) && Globals.EqualityOfDouble(Specular, other.Specular)
+                && Globals.EqualityOfDouble(Shininess, other.Shininess));
         }
     }
 }

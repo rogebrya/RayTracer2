@@ -14,7 +14,7 @@ namespace RayTracer2 {
         }
 
         public override List<Intersection> LocalIntersect(Ray localRay) {
-            if (EqualityOfDouble(Math.Abs(localRay.Direction.Y), 0)) {
+            if (Globals.EqualityOfDouble(Math.Abs(localRay.Direction.Y), 0)) {
                 return null;
             } else {
                 double t = -localRay.Origin.Y / localRay.Direction.Y;

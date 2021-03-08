@@ -7,11 +7,6 @@ using System.Text;
 namespace RayTracer2.Tests {
     [TestClass()]
     public class SmoothTriangleTests {
-        private const double EPSILON = 0.0001;
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
-        }
-
         static Tuple p1 = Tuple.Point(0, 1, 0);
         static Tuple p2 = Tuple.Point(-1, 0, 0);
         static Tuple p3 = Tuple.Point(1, 0, 0);
@@ -34,8 +29,8 @@ namespace RayTracer2.Tests {
         public void SmoothTriangleIntersection() {
             Ray r = new Ray(Tuple.Point(-0.2, 0.3, -2), Tuple.Vector(0, 0, 1));
             List<Intersection> xs = tri.LocalIntersect(r);
-            Assert.IsTrue(EqualityOfDouble(xs[0].U, 0.45));
-            Assert.IsTrue(EqualityOfDouble(xs[0].V, 0.25));
+            Assert.IsTrue(Globals.EqualityOfDouble(xs[0].U, 0.45));
+            Assert.IsTrue(Globals.EqualityOfDouble(xs[0].V, 0.25));
         }
 
         [TestMethod()]

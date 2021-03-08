@@ -7,11 +7,6 @@ using System.Text;
 namespace RayTracer2.Tests {
     [TestClass()]
     public class TriangleTests {
-        private const double EPSILON = 0.0001;
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
-        }
-
         [TestMethod()]
         public void TriangleTest() {
             Tuple p1 = Tuple.Point(0, 1, 0);
@@ -75,7 +70,7 @@ namespace RayTracer2.Tests {
             Ray r = new Ray(Tuple.Point(0, 0.5, -2), Tuple.Point(0, 0, 1));
             List<Intersection> xs = t.LocalIntersect(r);
             Assert.AreEqual(xs.Count, 1);
-            Assert.IsTrue(EqualityOfDouble(xs[0].T, 2.0));
+            Assert.IsTrue(Globals.EqualityOfDouble(xs[0].T, 2.0));
         }
     }
 }

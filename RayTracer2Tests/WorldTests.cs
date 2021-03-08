@@ -11,7 +11,7 @@ namespace RayTracer2.Tests {
         public void WorldTest() {
             World w = new World();
             Assert.IsNull(w.Shapes);
-            Assert.IsNull(w.Light);
+            Assert.IsNull(w.Lights);
         }
 
         [TestMethod()]
@@ -21,10 +21,10 @@ namespace RayTracer2.Tests {
             s1.Material.Diffuse = 0.7;
             s1.Material.Specular = 0.2;
             Sphere s2 = new Sphere();
-            s2.Transform = Transformation.Scale(0.5, 0.5, 0.5);
+            s2.Transform = new Scale(0.5, 0.5, 0.5).GetTransform();
             Light light = Light.PointLight(Tuple.Point(-10, 10, -10), new Color(1, 1, 1));
             World w = World.DefaultWorld();
-            Assert.AreEqual(w.Light, light);
+            Assert.AreEqual(w.Lights[0], light);
             Assert.IsTrue(w.Shapes.Contains(s1));
             Assert.IsTrue(w.Shapes.Contains(s2));
         }
@@ -55,7 +55,7 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void ShadeIntersectionInside() {
             World w = World.DefaultWorld();
-            w.Light = Light.PointLight(Tuple.Point(0, 0.25, 0), new Color(1, 1, 1));
+            w.Lights[0] = Light.PointLight(Tuple.Point(0, 0.25, 0), new Color(1, 1, 1));
             Ray r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 0, 1));
             Shape shape = w.Shapes[1];
             Intersection i = new Intersection(0.5, shape);
@@ -96,38 +96,40 @@ namespace RayTracer2.Tests {
         public void NoShadowOpenSpace() {
             World w = World.DefaultWorld();
             Tuple p = Tuple.Point(0, 10, 0);
-            Assert.IsFalse(w.IsShadowed(p));
+            Assert.IsFalse(w.IsShadowed(p, w.Lights[0].Position));
         }
 
         [TestMethod()]
         public void ShadowBehindObject() {
             World w = World.DefaultWorld();
             Tuple p = Tuple.Point(10, -10, 10);
-            Assert.IsTrue(w.IsShadowed(p));
+            Assert.IsTrue(w.IsShadowed(p, w.Lights[0].Position));
         }
 
         [TestMethod()]
         public void NoShadowBehindLight() {
             World w = World.DefaultWorld();
             Tuple p = Tuple.Point(-20, 20, -20);
-            Assert.IsFalse(w.IsShadowed(p));
+            Assert.IsFalse(w.IsShadowed(p, w.Lights[0].Position));
         }
 
         [TestMethod()]
         public void NoShadowBetweenLightAndObject() {
             World w = World.DefaultWorld();
             Tuple p = Tuple.Point(-2, 2, -2);
-            Assert.IsFalse(w.IsShadowed(p));
+            Assert.IsFalse(w.IsShadowed(p, w.Lights[0].Position));
         }
 
         [TestMethod()]
         public void ShadeHitInShadow() {
             World w = new World();
-            w.Light = Light.PointLight(Tuple.Point(0, 0, -10), new Color(1, 1, 1));
+            w.Lights = new List<Light>();
+            w.Lights.Add(Light.PointLight(Tuple.Point(0, 0, -10), new Color(1, 1, 1)));
             Sphere s1 = new Sphere();
             w.AddShape(s1);
             Sphere s2 = new Sphere();
-            s2.Transform = Transformation.Translate(0, 0, 10);
+            s2.TransformList.Add(new Translate(0, 0, 10));
+            s2.InitiateTransformation();
             w.AddShape(s2);
             Ray r = new Ray(Tuple.Point(0, 0, 5), Tuple.Vector(0, 0, 1));
             Intersection i = new Intersection(4, s2);
@@ -153,7 +155,7 @@ namespace RayTracer2.Tests {
             World w = World.DefaultWorld();
             Shape shape = new Plane();
             shape.Material.Reflectivity = 0.5;
-            shape.Transform = Transformation.Translate(0, -1, 0);
+            shape.Transform = new Translate(0, -1, 0).GetTransform();
             w.AddShape(shape);
             Ray r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             Intersection i = new Intersection(Math.Sqrt(2), shape);
@@ -167,7 +169,7 @@ namespace RayTracer2.Tests {
             World w = World.DefaultWorld();
             Shape shape = new Plane();
             shape.Material.Reflectivity = 0.5;
-            shape.Transform = Transformation.Translate(0, -1, 0);
+            shape.Transform = new Translate(0, -1, 0).GetTransform();
             w.AddShape(shape);
             Ray r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             Intersection i = new Intersection(Math.Sqrt(2), shape);
@@ -179,14 +181,17 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void ColorAtWithMutualReflections() {
             World w = new World();
-            w.Light = Light.PointLight(Tuple.Point(0, 0, 0), new Color(1, 1, 1));
+            w.Lights = new List<Light>();
+            w.Lights.Add(Light.PointLight(Tuple.Point(0, 0, 0), new Color(1, 1, 1)));
             Shape lower = new Plane();
             lower.Material.Reflectivity = 1;
-            lower.Transform = Transformation.Translate(0, -1, 0);
+            lower.TransformList.Add(new Translate(0, -1, 0));
+            lower.InitiateTransformation();
             w.AddShape(lower);
             Shape upper = new Plane();
             upper.Material.Reflectivity = 1;
-            upper.Transform = Transformation.Translate(0, 1, 0);
+            upper.TransformList.Add(new Translate(0, 1, 0));
+            upper.InitiateTransformation();
             w.AddShape(upper);
             Ray r = new Ray(Tuple.Point(0, 0, 0), Tuple.Vector(0, 1, 0));
             Color c = w.ColorAt(r, 5);
@@ -198,7 +203,7 @@ namespace RayTracer2.Tests {
             World w = World.DefaultWorld();
             Shape shape = new Plane();
             shape.Material.Reflectivity = 0.5;
-            shape.Transform = Transformation.Translate(0, -1, 0);
+            shape.Transform = new Translate(0, -1, 0).GetTransform();
             w.AddShape(shape);
             Ray r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             Intersection i = new Intersection(Math.Sqrt(2), shape);
@@ -274,14 +279,14 @@ namespace RayTracer2.Tests {
         public void ShadeHitWithTransparency() {
             World w = World.DefaultWorld();
             Shape floor = new Plane();
-            floor.Transform = Transformation.Translate(0, -1, 0);
+            floor.Transform = new Translate(0, -1, 0).GetTransform();
             floor.Material.Transparency = 0.5;
             floor.Material.RefractiveIndex = 1.5;
             w.AddShape(floor);
             Shape ball = new Sphere();
             ball.Material.Color = new Color(1, 0, 0);
             ball.Material.Ambient = 0.5;
-            ball.Transform = Transformation.Translate(0, -3.5, -0.5);
+            ball.Transform = new Translate(0, -3.5, -0.5).GetTransform();
             w.AddShape(ball);
             Ray r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             List<Intersection> xs = new List<Intersection>();
@@ -295,7 +300,7 @@ namespace RayTracer2.Tests {
         public void ShadeHitWithReflectiveTransparency() {
             World w = World.DefaultWorld();
             Shape floor = new Plane();
-            floor.Transform = Transformation.Translate(0, -1, 0);
+            floor.Transform = new Translate(0, -1, 0).GetTransform();
             floor.Material.Reflectivity = 0.5;
             floor.Material.Transparency = 0.5;
             floor.Material.RefractiveIndex = 1.5;
@@ -303,7 +308,7 @@ namespace RayTracer2.Tests {
             Shape ball = new Sphere();
             ball.Material.Color = new Color(1, 0, 0);
             ball.Material.Ambient = 0.5;
-            ball.Transform = Transformation.Translate(0, -3.5, -0.5);
+            ball.Transform = new Translate(0, -3.5, -0.5).GetTransform();
             w.AddShape(ball);
             Ray r = new Ray(Tuple.Point(0, 0, -3), Tuple.Vector(0, -Math.Sqrt(2) / 2, Math.Sqrt(2) / 2));
             List<Intersection> xs = new List<Intersection>();

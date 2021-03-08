@@ -7,11 +7,6 @@ using System.Text;
 namespace RayTracer2.Tests {
     [TestClass()]
     public class CSGTests {
-        private const double EPSILON = 0.0001;
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
-        }
-
         [TestMethod()]
         public void CSGTest() {
             Shape s1 = new Sphere();
@@ -118,14 +113,14 @@ namespace RayTracer2.Tests {
         public void RayHitsCSG() {
             Shape s1 = new Sphere();
             Shape s2 = new Sphere();
-            s2.Transform = Transformation.Translate(0, 0, 0.5);
+            s2.Transform = new Translate(0, 0, 0.5).GetTransform();
             CSG c = new CSG("union", s1, s2);
             Ray r = new Ray(Tuple.Point(0, 0, -5), Tuple.Vector(0, 0, 1));
             List<Intersection> xs = c.LocalIntersect(r);
             Assert.AreEqual(xs.Count, 2);
-            Assert.IsTrue(EqualityOfDouble(xs[0].T, 4));
+            Assert.IsTrue(Globals.EqualityOfDouble(xs[0].T, 4));
             Assert.AreEqual(xs[0].S, s1);
-            Assert.IsTrue(EqualityOfDouble(xs[1].T, 6.5));
+            Assert.IsTrue(Globals.EqualityOfDouble(xs[1].T, 6.5));
             Assert.AreEqual(xs[1].S, s2);
         }
     }

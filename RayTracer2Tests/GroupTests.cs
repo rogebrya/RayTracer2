@@ -37,9 +37,9 @@ namespace RayTracer2.Tests {
             Group g = new Group();
             Shape s1 = new Sphere();
             Shape s2 = new Sphere();
-            s2.Transform = Transformation.Translate(0, 0, -3);
+            s2.Transform = new Translate(0, 0, -3).GetTransform();
             Shape s3 = new Sphere();
-            s3.Transform = Transformation.Translate(5, 0, 0);
+            s3.Transform = new Translate(5, 0, 0).GetTransform();
             g.AddShape(s1);
             g.AddShape(s2);
             g.AddShape(s3);
@@ -55,9 +55,9 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void RayIntersectTransformedGroup() {
             Group g = new Group();
-            g.Transform = Transformation.Scale(2, 2, 2);
+            g.Transform = new Scale(2, 2, 2).GetTransform();
             Shape s = new Sphere();
-            s.Transform = Transformation.Translate(5, 0, 0);
+            s.Transform = new Translate(5, 0, 0).GetTransform();
             g.AddShape(s);
             Ray r = new Ray(Tuple.Point(10, 0, -10), Tuple.Vector(0, 0, 1));
             List<Intersection> xs = g.Intersect(r);
@@ -67,9 +67,9 @@ namespace RayTracer2.Tests {
         [TestMethod()]
         public void FindNormalOnChild() {
             Group g = new Group();
-            g.Transform = Transformation.Scale(2, 2, 2);
+            g.Transform = new Scale(2, 2, 2).GetTransform();
             Shape s = new Sphere();
-            s.Transform = Transformation.Translate(5, 0, 0);
+            s.Transform = new Translate(5, 0, 0).GetTransform();
             g.AddShape(s);
             Ray r = new Ray(Tuple.Point(10, 0, -10), Tuple.Vector(0, 0, 1));
             List<Intersection> xs = g.Intersect(r);

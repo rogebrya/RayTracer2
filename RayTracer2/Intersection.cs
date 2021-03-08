@@ -4,11 +4,6 @@ using System.Text;
 
 namespace RayTracer2 {
     public class Intersection {
-        private const double EPSILON = 0.0001;
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
-        }
-
         private double t;
         private Shape s;
         private double u;   // Triangles
@@ -88,8 +83,6 @@ namespace RayTracer2 {
     }
 
     public class Computations {
-        private const double EPSILON = 0.0001;
-
         public double t;
         public Shape shape;
         public Tuple point;
@@ -104,10 +97,6 @@ namespace RayTracer2 {
 
         private Computations() {
 
-        }
-
-        public static bool EqualityOfDouble(double a, double b) {
-            return Math.Abs(a - b) < EPSILON;
         }
 
         public static Computations PrepareComputations(Intersection i, Ray r, List<Intersection> xs = null) {
@@ -128,12 +117,12 @@ namespace RayTracer2 {
                 comps.inside = false;
             }
             comps.reflectv = Tuple.Reflect(r.Direction, comps.normalv);
-            comps.overPoint = comps.point + comps.normalv * EPSILON;
-            comps.underPoint = comps.point - comps.normalv * EPSILON;
+            comps.overPoint = comps.point + comps.normalv * Globals.EPSILON;
+            comps.underPoint = comps.point - comps.normalv * Globals.EPSILON;
 
             List<Shape> containers = new List<Shape>();
             foreach (Intersection j in xs) {
-                if (EqualityOfDouble(j.T, i.T) && j.S == i.S) {
+                if (Globals.EqualityOfDouble(j.T, i.T) && j.S == i.S) {
                     if (containers.Count == 0) {
                         comps.n1 = 1.0;
                     } else {
@@ -145,7 +134,7 @@ namespace RayTracer2 {
                 } else {
                     containers.Add(j.S);
                 }
-                if (EqualityOfDouble(j.T, i.T) && j.S == i.S) {
+                if (Globals.EqualityOfDouble(j.T, i.T) && j.S == i.S) {
                     if (containers.Count == 0) {
                         comps.n2 = 1.0;
                     } else {

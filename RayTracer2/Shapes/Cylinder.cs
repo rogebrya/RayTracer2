@@ -45,7 +45,7 @@ namespace RayTracer2 {
             List<Intersection> list = new List<Intersection>();
             double a = Math.Pow(localRay.Direction.X, 2) + Math.Pow(localRay.Direction.Z, 2);
 
-            if (Math.Abs(a) <= EPSILON) {
+            if (Math.Abs(a) <= Globals.EPSILON) {
                 IntersectCaps(localRay, list);
                 return list;
             }
@@ -87,7 +87,7 @@ namespace RayTracer2 {
         }
 
         public void IntersectCaps(Ray ray, List<Intersection> xs) {
-            if (!IsClosed || Math.Abs(ray.Direction.Y) <= EPSILON) {
+            if (!IsClosed || Math.Abs(ray.Direction.Y) <= Globals.EPSILON) {
                 return;
             }
 
@@ -104,9 +104,9 @@ namespace RayTracer2 {
 
         public override Tuple LocalNormalAt(Tuple localPoint, Intersection hit) {
             double dist = Math.Pow(localPoint.X, 2) + Math.Pow(localPoint.Z, 2);
-            if (dist < 1 && localPoint.Y >= Maximum - EPSILON) {
+            if (dist < 1 && localPoint.Y >= Maximum - Globals.EPSILON) {
                 return Tuple.Vector(0, 1, 0);
-            } else if (dist < 1 && localPoint.Y <= Minimum + EPSILON) {
+            } else if (dist < 1 && localPoint.Y <= Minimum + Globals.EPSILON) {
                 return Tuple.Vector(0, -1, 0);
             } else {
                 return Tuple.Vector(localPoint.X, 0, localPoint.Z);
@@ -118,8 +118,8 @@ namespace RayTracer2 {
             return
                 t1.Transform == t2.Transform &&
                 t1.Material == t2.Material &&
-                EqualityOfDouble(t1.Minimum, t2.Minimum) &&
-                EqualityOfDouble(t1.Maximum, t2.Maximum) &&
+                Globals.EqualityOfDouble(t1.Minimum, t2.Minimum) &&
+                Globals.EqualityOfDouble(t1.Maximum, t2.Maximum) &&
                 t1.IsClosed == t2.IsClosed;
         }
 
@@ -127,8 +127,8 @@ namespace RayTracer2 {
             return
                 !(t1.Transform == t2.Transform &&
                 t1.Material == t2.Material &&
-                EqualityOfDouble(t1.Minimum, t2.Minimum) &&
-                EqualityOfDouble(t1.Maximum, t2.Maximum) &&
+                Globals.EqualityOfDouble(t1.Minimum, t2.Minimum) &&
+                Globals.EqualityOfDouble(t1.Maximum, t2.Maximum) &&
                 t1.IsClosed == t2.IsClosed);
         }
 
@@ -151,8 +151,8 @@ namespace RayTracer2 {
             return
                 Transform == other.Transform &&
                 Material == other.Material &&
-                EqualityOfDouble(Minimum, other.Minimum) &&
-                EqualityOfDouble(Maximum, other.Maximum) &&
+                Globals.EqualityOfDouble(Minimum, other.Minimum) &&
+                Globals.EqualityOfDouble(Maximum, other.Maximum) &&
                 IsClosed == other.IsClosed;
         }
     }
