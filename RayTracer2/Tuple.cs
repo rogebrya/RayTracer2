@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RayTracer2 {
     public class Tuple : IEquatable<Tuple> {
-        protected double x;
-        protected double y;
-        protected double z;
-        protected double w;
+        private double x;
+        private double y;
+        private double z;
+        private double w;
 
         public Tuple(double x, double y, double z, double w) {
             this.x = x;
@@ -44,6 +45,7 @@ namespace RayTracer2 {
             set { w = value; }
         }
 
+        [JsonIgnore]
         public double[] GetTuple {
             get { return new double[4] { x, y, z, w }; }
         }

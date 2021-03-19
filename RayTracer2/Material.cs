@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RayTracer2 {
     public class Material {
@@ -51,6 +52,7 @@ namespace RayTracer2 {
             set { shininess = value; }
         }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Pattern Pattern {
             get { return pattern; }
             set { pattern = value; }
@@ -73,7 +75,7 @@ namespace RayTracer2 {
 
         public Color Lighting(Shape shape, Light light, Tuple point, Tuple eyev, Tuple normalv, bool isShadow) {
             Color c = Color;
-            if (Pattern != null) {
+            if (Pattern is not null) {
                 c = Pattern.PatternAtShape(shape, point);
             }
             Color effectiveColor = c * light.Intensity;
@@ -112,10 +114,10 @@ namespace RayTracer2 {
             str += Globals.prepend + "Diffuse: " + Diffuse + Environment.NewLine;
             str += Globals.prepend + "Specular: " + Specular + Environment.NewLine;
             str += Globals.prepend + "Shininess: " + Shininess + Environment.NewLine;
-            if (Pattern == null) {
+            if (Pattern is null) {
                 str += Globals.prepend + Globals.prepend + "Pattern: None" + Environment.NewLine;
             } else {
-                str += Globals.IndentString(Pattern.ToString()) + Environment.NewLine;
+                str += Globals.IndentString(Pattern.ToString());
             }
             str += Globals.prepend + "Reflectivity: " + Reflectivity + Environment.NewLine;
             str += Globals.prepend + "Transparency: " + Transparency + Environment.NewLine;

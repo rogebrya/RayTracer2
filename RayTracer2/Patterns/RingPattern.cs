@@ -4,6 +4,10 @@ using System.Text;
 
 namespace RayTracer2 {
     public class RingPattern : Pattern {
+        public RingPattern() {
+            PatternType = "Ring Pattern";
+        }
+
         public RingPattern(Color a, Color b) {
             A = a;
             B = b;

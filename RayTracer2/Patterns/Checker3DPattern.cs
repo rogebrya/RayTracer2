@@ -4,6 +4,10 @@ using System.Text;
 
 namespace RayTracer2 {
     public class Checker3DPattern : Pattern {
+        public Checker3DPattern() {
+            PatternType = "3D Checker Pattern";
+        }
+
         public Checker3DPattern(Color a, Color b) {
             A = a;
             B = b;

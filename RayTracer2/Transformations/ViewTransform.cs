@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RayTracer2 {
@@ -9,12 +10,40 @@ namespace RayTracer2 {
         private Tuple from;
         private Tuple to;
         private Tuple up;
+        [JsonInclude]
         private string transformType = "View Transform";
 
-        public ViewTransform(Tuple fromVector, Tuple toVector, Tuple upVector) {
-            from = fromVector;
-            to = toVector;
+        public ViewTransform() {
+            from = Tuple.Point(-2, 4, -7);
+            to = Tuple.Point(0, 1, 0);
+            up = Tuple.Vector(0, 1, 0);
+        }
+
+        public ViewTransform(Tuple fromPoint, Tuple toPoint, Tuple upVector) {
+            from = fromPoint;
+            to = toPoint;
             up = upVector;
+        }
+
+        public ViewTransform(double fromX, double fromY, double fromZ, double toX, double toY, double toZ, double upX, double upY, double upZ) {
+            from = Tuple.Point(fromX, fromY, fromZ);
+            to = Tuple.Point(toX, toY, toZ);
+            up = Tuple.Vector(upX, upY, upZ);
+        }
+
+        public Tuple From {
+            get { return from; }
+            set { from = value; }
+        }
+
+        public Tuple To {
+            get { return to; }
+            set { to = value; }
+        }
+
+        public Tuple Up {
+            get { return up; }
+            set { up = value; }
         }
 
         public override string ToString() {

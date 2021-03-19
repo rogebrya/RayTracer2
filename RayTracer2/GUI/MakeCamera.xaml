@@ -1,0 +1,23 @@
+﻿<Window x:Class="RayTracer2.MakeCamera"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MakeCamera" Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="290,354,0,0" VerticalAlignment="Top" Click="btnOK_Click" Width="50"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="442,354,0,0" VerticalAlignment="Top" Click="btnCancel_Click" Width="50"/>
+        <TextBox x:Name="txtHsize" HorizontalAlignment="Left" Margin="394,104,0,0" Text="Hsize" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="txtVsize" HorizontalAlignment="Left" Margin="394,127,0,0" Text="Vsize" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="txtFieldOfView" HorizontalAlignment="Left" Margin="394,150,0,0" Text="Field of View" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblHsize" Content="Horizontal Size:" HorizontalAlignment="Left" Margin="290,100,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="99"/>
+        <Label x:Name="lblVsize" Content="Vertical Size:" HorizontalAlignment="Left" Margin="290,123,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="99"/>
+        <Label x:Name="lblFieldOfView" Content="Field of View:" HorizontalAlignment="Left" Margin="290,146,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="99"/>
+        <Label x:Name="lblCamera" Content="Camera" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" HorizontalContentAlignment="Center" Margin="349,69,0,0"/>
+        <ListBox x:Name="lbTransformList" Margin="253,177,257,85"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="621,289,0,0" VerticalAlignment="Top" Click="btnDelete_Click"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="621,263,0,0" VerticalAlignment="Top" Width="38" Click="btnAdd_Click"/>
+
+    </Grid>
+</Window>

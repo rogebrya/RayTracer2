@@ -22,6 +22,7 @@ namespace RayTracer2 {
     /// </summary>
     public partial class MainWindow : Window {
         private World world;
+        public List<Material> materials;
 
         public MainWindow() {
             InitializeComponent();
@@ -38,16 +39,23 @@ namespace RayTracer2 {
                     Tuple.Vector(0, 1, 0)
                     ).GetTransform();
             UpdateLog();
-        }
 
-        public World World {
-            get { return world; }
-            set { world = value; }
+            try {
+                StreamReader jsonReader = new StreamReader("C:\\Users\\prome\\Desktop\\materials.rtmt");
+                string jsonString = jsonReader.ReadToEnd();
+                world = JsonSerializer.Deserialize<World>(jsonString);
+                tbkSceneLog.Text += "Materials successfully loaded from file." + Environment.NewLine;
+            } catch {
+                tbkSceneLog.Text += "No materials file found." + Environment.NewLine;
+            }
         }
 
         private void btnAddShape_Click(object sender, RoutedEventArgs e) {
             MakeSphere mksphr = new MakeSphere();
             mksphr.ShowDialog();
+            if (mksphr.sphere is not null) {
+                world.Shapes.Add(mksphr.sphere);
+            }
             UpdateLog();
         }
 
@@ -62,7 +70,7 @@ namespace RayTracer2 {
             sw.Close();
 
             time.Stop();
-            tbkSceneLog.Text += "Render Complete" + Environment.NewLine + "Time Elapsed: " + time.Elapsed.Seconds;
+            tbkSceneLog.Text += "Render Complete" + Environment.NewLine + "Time Elapsed: " + time.Elapsed.Seconds + " seconds";
             scvLog.ScrollToBottom();
         }
 
@@ -78,38 +86,51 @@ namespace RayTracer2 {
         private void btnAddCamera_Click(object sender, RoutedEventArgs e) {
             MakeCamera mkcam = new MakeCamera();
             mkcam.ShowDialog();
+            if (mkcam.camera is not null) {
+                world.Camera = mkcam.camera;
+            }
             UpdateLog();
         }
 
         private void btnAddLight_Click(object sender, RoutedEventArgs e) {
             MakeLight mklight = new MakeLight();
             mklight.ShowDialog();
+            if (mklight.light is not null) {
+                world.Lights.Add(mklight.light);
+            }
             UpdateLog();
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        public void SaveWorld() {
-            var options = new JsonSerializerOptions {
-                WriteIndented = true,
-            };
-            string jsonString = JsonSerializer.Serialize(world, options);
-            File.WriteAllText("C:\\Users\\prome\\Desktop\\savefile", jsonString);
-        }
-
-        public void LoadWorld() {
-            string jsonString = File.ReadAllText("C:\\Users\\prome\\Desktop\\savefile");
-            world = JsonSerializer.Deserialize<World>(jsonString);
+            world = new World();
+            UpdateLog();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e) {
-            SaveWorld();
+            var options = new JsonSerializerOptions {
+                WriteIndented = true,
+            };
+            StreamWriter sw = new StreamWriter("C:\\Users\\prome\\Desktop\\savefile.rtsv", false, Encoding.ASCII);
+            sw.Write(JsonSerializer.Serialize(world, options));
+            sw.Flush();
+            sw.Close();
+            //string jsonString = JsonSerializer.Serialize(world, options);
+            //File.WriteAllText("C:\\Users\\prome\\Desktop\\savefile", jsonString);
         }
 
         private void btnLoad_Click(object sender, RoutedEventArgs e) {
-            LoadWorld();
+            StreamReader jsonReader = new StreamReader("C:\\Users\\prome\\Desktop\\savefile.rtsv");
+            string jsonString = jsonReader.ReadToEnd();
+            world = JsonSerializer.Deserialize<World>(jsonString);
+        }
+
+        private void btnManageMaterials_Click(object sender, RoutedEventArgs e) {
+            ManageMaterials mngMaterials = new ManageMaterials();
+            mngMaterials.ShowDialog();
+            if (mngMaterials.materials is not null) {
+                materials = mngMaterials.materials;
+            }
+            UpdateLog();
         }
     }
 }

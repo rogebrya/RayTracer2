@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace RayTracer2 {
         private int vsize;
         private double fieldOfView;
         private Matrix transform = Matrix.GetIdentityMatrix();
-        private List<Matrix> transformList = new List<Matrix>();
+        private List<ITransformation> transformList = new List<ITransformation>();
         private double halfWidth;
         private double halfHeight;
         private double pixelSize;
@@ -41,12 +42,14 @@ namespace RayTracer2 {
             set { fieldOfView = value; }
         }
 
+        [JsonIgnore]
         public Matrix Transform {
             get { return transform; }
             set { transform = value; }
         }
 
-        public List<Matrix> TransformList {
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<ITransformation> TransformList {
             get { return transformList; }
             set { transformList = value; }
         }

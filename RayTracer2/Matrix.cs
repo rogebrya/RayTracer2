@@ -6,7 +6,6 @@ namespace RayTracer2 {
     public class Matrix : IEquatable<Matrix> {
         private double[,] matrix;
         private int size;
-        private List<ITransformation> transformations;
 
         public Matrix() { }
 
@@ -57,35 +56,6 @@ namespace RayTracer2 {
         public double[,] GetMatrix {
             get { return matrix; }
             //set { matrix = value; }
-        }
-
-        public List<ITransformation> Transformations {
-            get { return transformations; }
-            set { transformations = value; }
-        }
-
-        public void RebuildMatrix() {
-            matrix = new double[4, 4];
-            size = 4;
-            matrix[0, 0] = 1;
-            matrix[0, 1] = 0;
-            matrix[0, 2] = 0;
-            matrix[0, 3] = 0;
-            matrix[1, 0] = 0;
-            matrix[1, 1] = 1;
-            matrix[1, 2] = 0;
-            matrix[1, 3] = 0;
-            matrix[2, 0] = 0;
-            matrix[2, 1] = 0;
-            matrix[2, 2] = 1;
-            matrix[2, 3] = 0;
-            matrix[3, 0] = 0;
-            matrix[3, 1] = 0;
-            matrix[3, 2] = 0;
-            matrix[3, 3] = 1;
-            foreach(ITransformation t in transformations) {
-                
-            }
         }
 
         public static Matrix operator *(Matrix m1, Matrix m2) {

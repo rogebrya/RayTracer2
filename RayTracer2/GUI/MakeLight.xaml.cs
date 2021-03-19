@@ -15,7 +15,7 @@ namespace RayTracer2 {
     /// Interaction logic for MakeLight.xaml
     /// </summary>
     public partial class MakeLight : Window {
-        Light light;
+        public Light light;
 
         public MakeLight() {
             InitializeComponent();
@@ -58,7 +58,6 @@ namespace RayTracer2 {
                 light = Light.SpotLight(position, color, target, fieldOfView);
             }
 
-            ((MainWindow)Application.Current.MainWindow).World.AddLight(light);
             Close();
         }
 

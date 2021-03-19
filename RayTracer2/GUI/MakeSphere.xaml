@@ -1,0 +1,28 @@
+﻿<Window x:Class="RayTracer2.MakeSphere"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MakeSphere" Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="276,352,0,0" VerticalAlignment="Top" Click="btnOK_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="454,352,0,0" VerticalAlignment="Top" Click="btnCancel_Click"/>
+        <Label x:Name="lblTransform" Content="Transform" HorizontalAlignment="Left" Margin="152,63,0,0" VerticalAlignment="Top" Width="98" HorizontalContentAlignment="Center"/>
+        <Label x:Name="lblMaterial" Content="Material" HorizontalAlignment="Left" Margin="610,71,0,0" VerticalAlignment="Top" Width="102" HorizontalContentAlignment="Center" Height="24"/>
+        <ListBox x:Name="lbTransformList" Margin="56,102,454,160"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Center" Margin="0,194,0,0" VerticalAlignment="Top" Click="btnDelete_Click"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Center" Margin="0,168,0,0" VerticalAlignment="Top" Width="38" Click="btnAdd_Click"/>
+        <ListBox x:Name="lbMaterialSelection" Margin="512,113,33,256" SelectedIndex="0" SelectionChanged="lbMaterialSelection_SelectionChanged"/>
+        <TextBlock x:Name="tbkMaterialDescription" HorizontalAlignment="Left" Margin="512,194,0,0" Text="Material Description" TextWrapping="Wrap" VerticalAlignment="Top" Height="136" Width="255"/>
+        <ComboBox x:Name="cmbAddTransform" HorizontalAlignment="Left" Margin="373,135,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="Translate"/>
+            <ComboBoxItem Content="Scale"/>
+            <ComboBoxItem Content="RotateX"/>
+            <ComboBoxItem Content="RotateY"/>
+            <ComboBoxItem Content="RotateZ"/>
+            <ComboBoxItem Content="Shear"/>
+        </ComboBox>
+
+    </Grid>
+</Window>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RayTracer2 {
     public abstract class Shape {
@@ -10,21 +11,25 @@ namespace RayTracer2 {
         private Shape parent;
         private string shapeType;
 
+        [JsonIgnore]
         public Matrix Transform {
             get { return transform; }
             set { transform = value; }
         }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<ITransformation> TransformList {
             get { return transformList; }
             set { transformList = value; }
         }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Material Material {
             get { return material; }
             set { material = value; }
         }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Shape Parent {
             get { return parent; }
             set { parent = value; }
@@ -82,7 +87,7 @@ namespace RayTracer2 {
                     Transform = Transform * t.GetTransform();
                 }
             }
-            if (Material.Pattern != null) {
+            if (Material.Pattern is not null) {
                 Material.Pattern.InitiateTransformation();
             }
         }

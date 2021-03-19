@@ -100,7 +100,7 @@ namespace RayTracer2 {
         }
 
         public static Computations PrepareComputations(Intersection i, Ray r, List<Intersection> xs = null) {
-            if (xs == null) {
+            if (xs is null) {
                 xs = new List<Intersection>();
                 xs.Add(i);
             }

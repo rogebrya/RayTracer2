@@ -1,0 +1,16 @@
+﻿<Window x:Class="RayTracer2.AddRotateZ"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="AddRotateZ" Height="450" Width="800" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="280,270,0,0" VerticalAlignment="Top" Width="50" Click="btnOK_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="459,270,0,0" VerticalAlignment="Top" Width="50" Click="btnCancel_Click"/>
+        <TextBox x:Name="txtTheta" HorizontalAlignment="Left" Margin="365,216,0,0" Text="Theta" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblTheta" Content="Theta:" HorizontalAlignment="Left" Margin="286,212,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="75"/>
+        <Label x:Name="lblRotateZ" Content="RotateZ" HorizontalAlignment="Left" Margin="361,170,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

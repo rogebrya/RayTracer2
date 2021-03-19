@@ -2,15 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RayTracer2 {
     public class RotateZ : ITransformation {
         private double theta;
+        [JsonInclude]
         private string transformType = "RotateZ";
 
-        public RotateZ(double thetaX) {
-            theta = thetaX;
+        public RotateZ() {
+            theta = 0;
+        }
+
+        public RotateZ(double thetaZ) {
+            theta = thetaZ;
+        }
+
+        public double Theta {
+            get { return theta; }
+            set { theta = value; }
         }
 
         public override string ToString() {

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RayTracer2 {
     public abstract class Pattern {
-        private Color a;
-        private Color b;
+        private Color a = new Color(0, 0, 0);
+        private Color b = new Color(1, 1, 1);
         private Matrix transform = Matrix.GetIdentityMatrix();
-        private List<Matrix> transformList = new List<Matrix>();
+        private List<ITransformation> transformList = new List<ITransformation>();
         private string patternType;
 
         public Color A {
@@ -20,12 +21,14 @@ namespace RayTracer2 {
             set { b = value; }
         }
 
+        [JsonIgnore]
         public Matrix Transform {
             get { return transform; }
             set { transform = value; }
         }
 
-        public List<Matrix> TransformList {
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<ITransformation> TransformList {
             get { return transformList; }
             set { transformList = value; }
         }

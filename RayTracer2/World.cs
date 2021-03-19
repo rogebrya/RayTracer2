@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace RayTracer2 {
     public class World {
-        private List<Shape> shapes;
-        private List<Light> lights;
+        private List<Shape> shapes = new List<Shape>();
+        private List<Light> lights = new List<Light>();
         private Camera camera;
 
         public World() {
@@ -54,14 +54,14 @@ namespace RayTracer2 {
         }
 
         public void AddShape(Shape s) {
-            if (shapes == null) {
+            if (shapes is null) {
                 shapes = new List<Shape>();
             }
             shapes.Add(s);
         }
 
         public void AddLight(Light lt) {
-            if (lights == null) {
+            if (lights is null) {
                 lights = new List<Light>();
             }
             lights.Add(lt);
@@ -71,7 +71,7 @@ namespace RayTracer2 {
             List<Intersection> list = new List<Intersection>();
             foreach (Shape s in shapes) {
                 List<Intersection> partialList = s.Intersect(r);
-                if (partialList != null) {
+                if (partialList is not null) {
                     list.AddRange(partialList);
                 }
             }
@@ -81,14 +81,14 @@ namespace RayTracer2 {
 
         public override string ToString() {
             string str = "";
-            if (Camera == null) {
+            if (Camera is null) {
                 str += "Camera: None" + Environment.NewLine;
             } else {
                 str += camera.ToString();
             }
             str += Environment.NewLine;
 
-            if (Lights == null) {
+            if (Lights is null) {
                 str += "Lights: None";
             } else {
                 str += "Lights:" + Environment.NewLine;
@@ -98,7 +98,7 @@ namespace RayTracer2 {
                 }
             }
 
-            if (Shapes == null) {
+            if (Shapes is null) {
                 str += "Shapes: None";
             } else {
                 str += "Shapes:" + Environment.NewLine;
@@ -135,7 +135,7 @@ namespace RayTracer2 {
         public Color ColorAt(Ray r, int remaining) {
             List<Intersection> xs = IntersectWorld(r);
             Intersection i = Intersection.Hit(xs);
-            if (i == null) {
+            if (i is null) {
                 return new Color(0, 0, 0);
             } else {
                 Computations comps = Computations.PrepareComputations(i, r, xs);
@@ -152,7 +152,7 @@ namespace RayTracer2 {
             List<Intersection> intersections = IntersectWorld(r);
 
             Intersection h = Intersection.Hit(intersections);
-            if (h != null && h.T < distance) {
+            if (h is not null && h.T < distance) {
                 return true;
             } else {
                 return false;

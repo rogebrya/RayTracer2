@@ -4,6 +4,10 @@ using System.Text;
 
 namespace RayTracer2 {
     public class StripedPattern : Pattern {
+        public StripedPattern() {
+            PatternType = "Striped Pattern";
+        }
+
         public StripedPattern(Color a, Color b) {
             A = a;
             B = b;

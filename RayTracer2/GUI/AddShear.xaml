@@ -1,0 +1,26 @@
+﻿<Window x:Class="RayTracer2.AddShear"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="AddShear" Height="450" Width="800" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="280,320,0,0" VerticalAlignment="Top" Width="50" Click="btnOK_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="459,320,0,0" VerticalAlignment="Top" Width="50" Click="btnCancel_Click"/>
+        <TextBox x:Name="txtXY" HorizontalAlignment="Left" Margin="384,136,0,0" Text="XY" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblxy" Content="XY:" HorizontalAlignment="Left" Margin="305,132,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="75"/>
+        <Label x:Name="lblShear" Content="Shear" HorizontalAlignment="Left" Margin="380,90,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtXZ" HorizontalAlignment="Left" Margin="384,162,0,0" Text="XZ" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblXZ" Content="XZ:" HorizontalAlignment="Left" Margin="305,158,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="75"/>
+        <TextBox x:Name="txtYX" HorizontalAlignment="Left" Margin="384,188,0,0" Text="YX" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblYX" Content="YX:" HorizontalAlignment="Left" Margin="305,184,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="75"/>
+        <TextBox x:Name="txtYZ" HorizontalAlignment="Left" Margin="384,217,0,0" Text="YZ" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblYZ" Content="YZ:" HorizontalAlignment="Left" Margin="305,213,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="75"/>
+        <TextBox x:Name="txtZX" HorizontalAlignment="Left" Margin="384,244,0,0" Text="ZX" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblZX" Content="ZX:" HorizontalAlignment="Left" Margin="305,240,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="75"/>
+        <TextBox x:Name="txtZY" HorizontalAlignment="Left" Margin="384,269,0,0" Text="ZY" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblZY" Content="ZY:" HorizontalAlignment="Left" Margin="305,265,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="75"/>
+
+    </Grid>
+</Window>

@@ -4,6 +4,10 @@ using System.Text;
 
 namespace RayTracer2 {
     public class GradientPattern : Pattern {
+        public GradientPattern() {
+            PatternType = "Gradient Pattern";
+        }
+
         public GradientPattern(Color a, Color b) {
             A = a;
             B = b;

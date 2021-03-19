@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RayTracer2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"  HorizontalAlignment="Center" VerticalAlignment="Center" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
+        Title="MainWindow" Height="450" Width="800"  HorizontalAlignment="Center" VerticalAlignment="Center" 
+        Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <ComboBox x:Name="cmbAA" HorizontalAlignment="Left" Margin="613,152,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
             <ComboBoxItem Content="None"/>
@@ -36,6 +36,7 @@
         <Button x:Name="btnNew" Content="New World" HorizontalAlignment="Left" Margin="305,388,0,0" VerticalAlignment="Top" Width="80" Height="24" Click="btnNew_Click"/>
         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="633,318,0,0" VerticalAlignment="Top" Height="24" Width="80" Click="btnSave_Click"/>
         <Button x:Name="btnLoad" Content="Load" HorizontalAlignment="Left" Margin="633,353,0,0" VerticalAlignment="Top" Height="24" Width="80" Click="btnLoad_Click"/>
+        <Button x:Name="btnManageMaterials" Content="Manage Materials" HorizontalAlignment="Left" Margin="613,73,0,0" VerticalAlignment="Top" Width="120" Click="btnManageMaterials_Click"/>
 
     </Grid>
 </Window>
